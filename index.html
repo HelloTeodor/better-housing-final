@@ -6,13 +6,42 @@
     <link rel="stylesheet" href="output.css" />
     <title>Document</title>
   </head>
-  <body>
-    <header>
-      <div class="">
-        <div data-name="logo"></div>
-        <div data-name="links"></div>
-        <div data-name="buttons"></div>
-      </div>
+  <body class="bg-(--color-primary) m-0 p-0">
+    <header class="w-full m-0 p-0">
+      <nav class="w-full m-0 p-0 flex justify-center items-center">
+        <div data-name="navContainer" class="bg-white w-full flex">
+          <div data-name="logo">
+            <img
+              src="Bh-logo-header.svg"
+              alt="Better-housing-logo"
+              class="w-3xs"
+            />
+          </div>
+          <div data-name="links">
+            <ul class="flex">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div data-name="buttons"></div>
+        </div>
+      </nav>
     </header>
+    <main>
+      <div class="w-full m-0 p-0 flex justify-center items-center">
+        <div
+          data-name="hero"
+          class="bg-white w-[90%] h-[250px] mt-5 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.3)]"
+        >
+          <h1 class="text-5xl font-bold">Who we are</h1>
+          <p>
+            Better Housing is a trusted real estate advisory. We help tenants
+            find the right place and landlords manage rental properties — with
+            practical, local advice and friendly support.
+          </p>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
