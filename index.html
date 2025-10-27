@@ -3,45 +3,402 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="output.css" />
+    <link rel="stylesheet" href="./src/output.css" />
     <title>Document</title>
   </head>
-  <body class="bg-(--color-primary) m-0 p-0">
+  <body class="m-0 p-0">
     <header class="w-full m-0 p-0">
-      <nav class="w-full m-0 p-0 flex justify-center items-center">
-        <div data-name="navContainer" class="bg-white w-full flex">
-          <div data-name="logo">
+      <nav class="w-full m-0 p-0 flex justify-center items-center fixed">
+        <div
+          data-name="navContainer"
+          class="bg-white/85 w-full flex justify-between items-center backdrop-blur-sm shadow-2xs"
+        >
+          <div data-name="logo" class="flex justify-start items-center">
             <img
-              src="Bh-logo-header.svg"
+              src="./assets/Bh-logo-header.svg"
               alt="Better-housing-logo"
-              class="w-3xs"
+              class="w-[140px] h-[55px] min-w-[140px] min-h-[55px]"
             />
           </div>
-          <div data-name="links">
-            <ul class="flex">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
+          <div
+            data-name="links"
+            class="w-full flex justify-around items-center"
+          >
+            <ul class="w-full flex justify-center items-center">
+              <li
+                class="px-8 hover:border-b-2 hover:border-(--color-secondary)"
+              >
+                <a href="#">Home</a>
+              </li>
+              <li
+                class="px-8 hover:border-b-2 hover:border-(--color-secondary)"
+              >
+                <a href="#">Services</a>
+              </li>
+              <li
+                class="px-8 hover:border-b-2 hover:border-(--color-secondary)"
+              >
+                <a href="#">About</a>
+              </li>
             </ul>
           </div>
-          <div data-name="buttons"></div>
+          <div data-name="buttons" class="flex pr-6">
+            <button
+              class="bg-(--color-secondary) w-40 h-10 rounded-md text-white font-bold cursor-pointer"
+            >
+              Contact
+            </button>
+          </div>
         </div>
       </nav>
     </header>
     <main>
-      <div class="w-full m-0 p-0 flex justify-center items-center">
+      <section data-name="hero">
         <div
-          data-name="hero"
-          class="bg-white w-[90%] h-[250px] mt-5 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.3)]"
+          class="w-full h-dvh bg-[url('/assets/joao.jpg')] bg-cover bg-center"
         >
-          <h1 class="text-5xl font-bold">Who we are</h1>
-          <p>
-            Better Housing is a trusted real estate advisory. We help tenants
-            find the right place and landlords manage rental properties — with
-            practical, local advice and friendly support.
-          </p>
+          <div class="w-full h-full flex justify-center items-center">
+            <div class="w-full h-full bg-transparent"></div>
+            <div
+              class="w-full h-full bg-(--color-primary)/50 flex flex-col justify-center items-center"
+            >
+              <div class="w-[80%]">
+                <h1 class="text-white text-6xl font-bold pb-8">
+                  We are your housing partner for placing your staff
+                </h1>
+                <p class="text-white">
+                  We would like to solve the accommodation issue together with
+                  you and see ourselves as a partner for your projects. We
+                  remain actively involved throughout the entire process from
+                  key handover with check-in to the moment of outcheck to ensure
+                  quality.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+      <section data-name="contactForm">
+        <div
+          data-name="formContainer"
+          class="w-full flex justify-center items-start pt-16 pb-16"
+        >
+          <form
+            action="/submit"
+            method="POST"
+            class="w-full flex flex-col justify-center items-center"
+          >
+            <div class="w-[80%]">
+              <div class="w-full">
+                <h2 class="text-4xl text-(--color-primary) font-extrabold">
+                  Contact Us
+                </h2>
+                <p class="text-gray-500 pt-6">
+                  Have questions about renting or managing your property? We're
+                  here to help you find the right solutions.
+                </p>
+              </div>
+              <div
+                data-name="firstLastName"
+                class="w-full flex justify-center items-center pt-6"
+              >
+                <input
+                  type="text"
+                  placeholder="First name"
+                  class="border border-gray-200 w-full mr-4 rounded-lg px-2 py-1.5"
+                />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  class="border border-gray-200 w-full rounded-lg px-2 py-1.5"
+                />
+              </div>
+              <div
+                data-name="phoneEmailMessage"
+                class="w-full flex flex-col justify-center items-center mt-4"
+              >
+                <input
+                  type="text"
+                  placeholder="Phone"
+                  class="border border-gray-200 w-full rounded-lg px-2 py-1.5"
+                />
+                <input
+                  type="email"
+                  placeholder="E-mail address"
+                  class="border border-gray-200 w-full mt-4 rounded-lg px-2 py-1.5"
+                />
+                <textarea
+                  name="message"
+                  id="message"
+                  placeholder="Your message..."
+                  class="border border-gray-200 w-full mt-4 rounded-lg px-2 py-1.5"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="border w-full mt-4 rounded-lg px-2 py-2.5 text-white bg-(--color-primary)"
+              >
+                Send message
+              </button>
+            </div>
+          </form>
+          <form
+            action="/submit"
+            method="POST"
+            class="w-full flex flex-col justify-start items-center"
+          >
+            <div class="w-[80%]">
+              <div
+                data-name="bhPhone"
+                class="w-full flex border border-gray-200 rounded-2xl px-2 py-6"
+              >
+                <div
+                  class="bg-gray-100 mr-4 flex justify-center items-center px-3 py-3 rounded-full mx-3"
+                >
+                  <img
+                    src="/assets/output-onlinepngtools.png"
+                    alt="phone image"
+                    class="w-6"
+                  />
+                </div>
+                <div>
+                  <p class="w-full text-(--color-primary) text-md font-bold">
+                    Call us
+                  </p>
+                  <p class="w-full text-gray-500">+31 628 839 811</p>
+                </div>
+              </div>
+              <div
+                data-name="bhEmail"
+                class="w-full flex border border-gray-200 rounded-2xl mt-4 px-2 py-6"
+              >
+                <div
+                  class="bg-gray-100 mr-4 flex justify-center items-center px-3 py-3 rounded-full mx-3"
+                >
+                  <img
+                    src="/assets/output-onlinepngtools-2.png"
+                    alt="email image"
+                    class="w-6"
+                  />
+                </div>
+                <div>
+                  <p class="w-full text-(--color-primary) text-md font-bold">
+                    E-mail
+                  </p>
+                  <p class="w-full text-gray-500">info@better-housing.nl</p>
+                </div>
+              </div>
+              <div
+                data-name="newsletter"
+                class="w-full flex flex-col bg-(--color-accent-blue) border border-gray-200 rounded-2xl mt-4 px-2 py-6"
+              >
+                <p
+                  class="w-full text-(--color-accent-button-text) font-medium text-lg ml-4"
+                >
+                  Newsletter
+                </p>
+                <p class="w-[90%] text-(--color-accent-3)/80 pt-1.5 ml-4">
+                  Subscribe to get the latest real estate insights and tips.
+                  Fresh market updates delivered to your inbox.
+                </p>
+                <div class="w-full flex justify-center items-center">
+                  <input
+                    type="email"
+                    name="email"
+                    id=""
+                    placeholder="Your E-mail"
+                    class="border w-[70%] bg-white border-gray-200 rounded-lg px-2 pt-1.5 pb-3.5 mt-4 mr-4 ml-4"
+                  />
+                  <button
+                    type="submit"
+                    class="w-[30%] bg-(--color-accent-button) px-2 py-1.5 rounded-lg text-(--color-accent-button-text) mt-4 mr-4"
+                  >
+                    Subscribe
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section data-name="help" class="w-full h-[300px] border">
+        <div
+          data-name="helpContainer"
+          class="w-full flex flex-col justify-center items-center"
+        >
+          <div>
+            <h3>How can we help you?</h3>
+          </div>
+          <div
+            data-name="helpCards"
+            class="w-full flex justify-center items-center"
+          >
+            <div
+              data-name="helpCard"
+              class="border w-xl flex flex-col justify-center items-center mx-8"
+            >
+              <p>Logo</p>
+              <p>Looking to Rent</p>
+              <p class="text-center">
+                Find the perfect property with expert guidance. We help tenants
+                navigate the rental market and secure their ideal home.
+              </p>
+              <button>Get started</button>
+            </div>
+            <div
+              data-name="helpCard"
+              class="border w-xl flex flex-col justify-center items-center mx-8"
+            >
+              <p>Logo</p>
+              <p>Looking to Rent</p>
+              <p class="text-center">
+                Find the perfect property with expert guidance. We help tenants
+                navigate the rental market and secure their ideal home.
+              </p>
+              <button>Get started</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- <section data-name="help" class="w-full h-[1000px]">
+        <div
+          data-name="helpContainer"
+          class="w-full border flex flex-col justify-center items-center"
+        >
+          <h3 class="border">How Can We Help You?</h3>
+          <div
+            data-name="helpCards"
+            class="w-full border flex justify-center items-center"
+          >
+            <div
+              data-name="company"
+              class="border w-full flex justify-center items-center"
+            >
+              <div
+                class="w-[80%] border flex flex-col justify-center items-center"
+              >
+                <p>logo</p>
+                <p>Looking to Rent</p>
+                <p>
+                  Find the perfect property with expert guidance. We help
+                  tenants navigate the rental market and secure their ideal
+                  home.
+                </p>
+                <button>Get started</button>
+              </div>
+            </div>
+            <div
+              data-name="owner"
+              class="border w-full flex justify-center items-center"
+            >
+              <div
+                class="w-[80%] border flex flex-col justify-center items-center"
+              >
+                <p>logo</p>
+                <p>Looking to Rent</p>
+                <p>
+                  Find the perfect property with expert guidance. We help
+                  tenants navigate the rental market and secure their ideal
+                  home.
+                </p>
+                <button>Get started</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+      <section data-name="customer" class="w-full h-[300px] border">
+        <div
+          data-name="helpContainer"
+          class="w-full flex flex-col justify-center items-center"
+        >
+          <div>
+            <h3>How can we help you?</h3>
+          </div>
+          <div
+            data-name="helpCards"
+            class="w-full flex justify-center items-center"
+          >
+            <div
+              data-name="helpCard"
+              class="border w-xl flex flex-col justify-center items-center mx-8"
+            >
+              <p>Logo</p>
+              <p>Looking to Rent</p>
+              <p class="text-center">
+                Find the perfect property with expert guidance. We help tenants
+                navigate the rental market and secure their ideal home.
+              </p>
+              <button>Get started</button>
+            </div>
+            <div
+              data-name="helpCard"
+              class="border w-xl flex flex-col justify-center items-center mx-8"
+            >
+              <p>Logo</p>
+              <p>Looking to Rent</p>
+              <p class="text-center">
+                Find the perfect property with expert guidance. We help tenants
+                navigate the rental market and secure their ideal home.
+              </p>
+              <button>Get started</button>
+            </div>
+            <div
+              data-name="helpCard"
+              class="border w-xl flex flex-col justify-center items-center mx-8"
+            >
+              <p>Logo</p>
+              <p>Looking to Rent</p>
+              <p class="text-center">
+                Find the perfect property with expert guidance. We help tenants
+                navigate the rental market and secure their ideal home.
+              </p>
+              <button>Get started</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section data-name="ready" class="w-full h-[300px] border">
+        <div
+          data-name="helpContainer"
+          class="w-full flex flex-col justify-center items-center"
+        >
+          <div>
+            <h3>How can we help you?</h3>
+          </div>
+          <div
+            data-name="helpCards"
+            class="w-full flex justify-center items-center"
+          >
+            <div
+              data-name="helpCard"
+              class="border w-xl flex flex-col justify-center items-center mx-8"
+            >
+              <p>Logo</p>
+              <p>Looking to Rent</p>
+              <p class="text-center">
+                Find the perfect property with expert guidance. We help tenants
+                navigate the rental market and secure their ideal home.
+              </p>
+              <button>Get started</button>
+            </div>
+            <div
+              data-name="helpCard"
+              class="border w-xl flex flex-col justify-center items-center mx-8"
+            >
+              <p>Logo</p>
+              <p>Looking to Rent</p>
+              <p class="text-center">
+                Find the perfect property with expert guidance. We help tenants
+                navigate the rental market and secure their ideal home.
+              </p>
+              <button>Get started</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section data-name="featured"></section>
     </main>
+    <footer></footer>
   </body>
 </html>

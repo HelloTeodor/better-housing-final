@@ -1,0 +1,11 @@
+:root {
+  --color-primary: #21468b;
+  --color-secondary: #ae1c28;
+  --color-accent-blue: rgb(218, 237, 251);
+  --color-accent-2: rgb(235, 226, 214);
+  --color-accent-3: hsl(215, 45%, 25%);
+  --color-accent-button: rgb(235, 226, 214);
+  --color-accent-button-text: rgb(52, 66, 86);
+}
+
+@import "tailwindcss";
