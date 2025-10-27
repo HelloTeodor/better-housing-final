@@ -6,6 +6,12 @@
   --color-accent-3: hsl(215, 45%, 25%);
   --color-accent-button: rgb(235, 226, 214);
   --color-accent-button-text: rgb(52, 66, 86);
+  --color-accent-text-light: rgb(108, 124, 147);
+  --color-shadow-white: rgba(255, 255, 255, 0.6);
 }
 
 @import "tailwindcss";
+
+@theme {
+  --breakpoint-six: 600px;
+}
