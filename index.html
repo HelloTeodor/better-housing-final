@@ -67,7 +67,7 @@
                 <li
                   class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
                 >
-                  <a href="#">Services</a>
+                  <a href="#help">Services</a>
                 </li>
                 <li
                   class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
@@ -77,10 +77,12 @@
               </ul>
             </div>
             <div data-name="buttons" class="flex pr-6">
-              <button
-                class="bg-(--color-secondary) w-40 h-10 rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
-              >
-                Contact
+              <button></button>
+                <a
+                  href="#contact"
+                  class="bg-(--color-secondary) w-40 h-10 flex justify-center items-center rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
+                  >Contact</a
+                >
               </button>
             </div>
           </div>
@@ -89,7 +91,7 @@
       <!-- end desktop navBar -->
     </header>
     <main>
-      <section data-name="hero">
+      <section data-name="hero" id="hero">
         <div
           class="w-full h-dvh bg-[url('/assets/joao.jpg')] bg-cover bg-start"
         >
@@ -125,16 +127,21 @@
           </div>
         </div>
       </section>
-      <section data-name="contactForm">
+      <section data-name="contactForm" id="contact">
         <div
           data-name="formContainer"
           class="w-full flex flex-col md:flex-row justify-center items-start py-16"
         >
           <form
-            action="/submit"
+            action="https://api.web3forms.com/submit"
             method="POST"
             class="w-full flex flex-col justify-center items-center"
           >
+            <input
+              type="hidden"
+              name="access_key"
+              value="2a4702e4-9c31-4f2d-a451-70ea164640b9"
+            />
             <div class="w-[80%]">
               <div class="w-full">
                 <h2 class="text-4xl text-(--color-primary) font-extrabold">
@@ -152,11 +159,15 @@
                 <input
                   type="text"
                   placeholder="First name"
+                  name="firstName"
+                  required
                   class="border border-gray-200 w-full mr-4 rounded-lg px-2 py-1.5"
                 />
                 <input
                   type="text"
                   placeholder="Last Name"
+                  name="lastName"
+                  required
                   class="border border-gray-200 w-full rounded-lg px-2 py-1.5"
                 />
               </div>
@@ -167,11 +178,15 @@
                 <input
                   type="text"
                   placeholder="Phone"
+                  name="phone"
+                  required
                   class="border border-gray-200 w-full rounded-lg px-2 py-1.5"
                 />
                 <input
                   type="email"
                   placeholder="E-mail address"
+                  name="email"
+                  required
                   class="border border-gray-200 w-full mt-4 rounded-lg px-2 py-1.5"
                 />
                 <textarea
@@ -270,7 +285,7 @@
           </form>
         </div>
       </section>
-      <section data-name="help" class="w-full">
+      <section data-name="help" class="w-full" id="help">
         <div
           data-name="helpContainer"
           class="w-full flex flex-col justify-center items-center py-16 bg-gray-100"
@@ -343,7 +358,7 @@
           </div>
         </div>
       </section>
-      <section data-name="customers" class="w-full">
+      <section data-name="customers" class="w-full" id="customers">
         <div
           data-name="customersContainer"
           class="w-full flex flex-col justify-center items-center py-16 bg-white"
@@ -425,7 +440,7 @@
           </div>
         </div>
       </section>
-      <section data-name="Join Us" class="w-full">
+      <section data-name="Join Us" class="w-full" id="join">
         <div
           data-name="JoinContainer"
           class="w-full flex flex-col justify-center items-center py-16 bg-(--color-primary)"
@@ -491,7 +506,7 @@
           </div>
         </div>
       </section>
-      <section data-name="ads">
+      <section data-name="ads" id="ads">
         <div data-name="adsContainer">
           <div
             class="w-full h-[550px] md:h-[400px] bg-[url('/assets/fauzan.jpg')] bg-cover bg-center flex"
