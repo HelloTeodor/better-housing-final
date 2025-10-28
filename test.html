@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Better-Housing | Coming Soon</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("livingroom.jpg") no-repeat center center/cover;
+        color: #fff;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+      }
+      .container {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 2rem;
+        border-radius: 12px;
+        max-width: 400px;
+        width: 100%;
+      }
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+      }
+      form input {
+        width: 100%;
+        padding: 0.75rem;
+        margin: 0.5rem 0;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      form button {
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        background: #8f826e;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      form button:hover {
+        background: #45a049;
+      }
+      footer {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: #ccc;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+        p {
+          font-size: 1rem;
+        }
+        form input,
+        form button {
+          font-size: 0.95rem;
+          padding: 0.65rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Better-Housing</h1>
+      <p>Coming soon!</p>
+      <p>
+        Better homes for everyone. Subscribe and be the first who finds their
+        next home.
+      </p>
+      <form id="notifyForm">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <button type="submit">Subscribe!</button>
+      </form>
+      <footer>
+        &copy; <span id="year"></span> Better-Housing. All rights reserved.
+      </footer>
+    </div>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+      // Set current year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Initialize EmailJS
+      emailjs.init("fv4bMIimYNKbbjz3-"); // Replace with your EmailJS public key
+
+      // Handle form submission
+      document
+        .getElementById("notifyForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = this.name.value;
+          const email = this.email.value;
+
+          // Send email via EmailJS
+          emailjs
+            .send("service_w7trdyg", "template_g3bd9px", {
+              from_name: name,
+              from_email: email,
+              to_email: "anccaradu@mail.com",
+            })
+            .then(() => {
+              alert("Thank you! Your info has been sent.");
+              this.reset();
+            })
+            .catch((error) => {
+              console.error(error);
+              alert("Oops! Something went wrong. Please try again.");
+            });
+        });
+    </script>
+  </body>
+</html>
