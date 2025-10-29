@@ -2,21 +2,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuBtn = document.getElementById("menu");
   const nav = document.querySelector('[data-name="linksMobileNav"]');
 
-  // Start hidden above the viewport
+  // Initial state (hidden)
   nav.style.top = "-100vh";
   nav.style.transition = "top 0.2s ease-in-out";
 
   let menuOpen = false;
 
-  menuBtn.addEventListener("click", () => {
+  const closeMenu = () => {
+    nav.style.top = "-100vh";
+    menuOpen = false;
+  };
+
+  menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent triggering document click
     if (!menuOpen) {
-      // Slide down to visible position
-      nav.style.top = "3.45rem"; // same as top-13 (~52px)
+      nav.style.top = "3.45rem"; // adjust to your header height
       menuOpen = true;
     } else {
-      // Slide back up
-      nav.style.top = "-100vh";
-      menuOpen = false;
+      closeMenu();
+    }
+  });
+
+  // Close menu when clicking any link inside it
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      closeMenu();
+    });
+  });
+
+  // Close when clicking outside of the nav and menu button
+  document.addEventListener("click", (e) => {
+    if (menuOpen && !nav.contains(e.target) && !menuBtn.contains(e.target)) {
+      closeMenu();
     }
   });
 });
