@@ -11,7 +11,9 @@
 }
 
 @import "tailwindcss";
+@source "../*.html";
 
 @theme {
   --breakpoint-six: 600px;
+  --breakpoint-five: 500px;
 }

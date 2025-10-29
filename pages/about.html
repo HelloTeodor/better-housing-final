@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../src/output.css" />
+    <title>About</title>
+  </head>
+  <body class="m-0 p-0 overflow-x-hidden">
+    <header class="w-full m-0 p-0">
+      <!-- start mobile navBar -->
+      <nav
+        data-name="mobileNav"
+        class="md:hidden w-full flex justify-center items-center fixed z-50"
+      >
+        <div
+          data-name="navContainer"
+          class="bg-white/85 w-full backdrop-blur-sm shadow-2xs"
+        >
+          <div class="w-full flex justify-between items-center bg-transparent">
+            <div data-name="logo" class="flex justify-start items-center">
+              <img
+                src="../assets/Bh-logo-header.svg"
+                alt="Better-housing-logo"
+                class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer"
+              />
+            </div>
+            <div data-name="menu" class="pr-4">
+              <img src="/assets/menu.png" alt="menu icon" class="w-8" />
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- end mobile navBar -->
+      <!-- start desktop navBar -->
+      <nav
+        data-name="dekstopNav"
+        class="hidden md:w-full md:m-0 md:p-0 md:flex md:justify-center md:items-center md:fixed md:z-50"
+      >
+        <div
+          data-name="navContainer"
+          class="bg-white/85 w-full backdrop-blur-sm shadow-2xs"
+        >
+          <div class="w-full flex justify-between items-center bg-transparent">
+            <div data-name="logo" class="flex justify-start items-center">
+              <img
+                src="../assets/Bh-logo-header.svg"
+                alt="Better-housing-logo"
+                class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer"
+              />
+            </div>
+            <div
+              data-name="links"
+              class="w-full flex justify-around items-center"
+            >
+              <ul class="w-full flex justify-center items-center">
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="../index.html#home">Home</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="../index.html#help">Services</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="#">About</a>
+                </li>
+              </ul>
+            </div>
+            <div data-name="linkContact" class="flex pr-6">
+                <a
+                  href="../index.html#contact"
+                  class="bg-(--color-secondary) w-40 h-10 flex justify-center items-center rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
+                  >Contact</a
+                >
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- end desktop navBar -->
+    </header>
+    <main>
+      <section data-name="hero" id="hero">
+        <div
+          class="w-full h-dvh bg-[url('/assets/joao.jpg')] bg-cover bg-start"
+        >
+          <div class="w-full h-full flex justify-center items-center">
+            <div class="w-full h-full bg-transparent hidden six:block"></div>
+            <div
+              class="w-full h-full bg-(--color-primary)/50 flex flex-col justify-center items-center"
+            >
+              <div class="w-[80%]">
+                <h1 class="text-white text-4xl font-bold pb-8">
+                  About Better-Housing
+                </h1>
+                <p class="text-white pb-8 six:hidden">
+                  Your trusted partner in real estate, helping clients make informed decisions since day one. At Better Housing, we specialize in delivering complete accommodation solutions designed around your project’s needs.
+                </p>
+                <p class="text-white pb-8 hidden six:block">
+                  At Better Housing, we specialize in delivering complete accommodation solutions designed around your project’s needs. From move-in to check-out, we handle every detail with care — ensuring comfort, reliability, and top-tier service at every step. Our mission is simple: to make staff housing effortless, so you can stay focused on your core business.
+                </p>
+                <button
+                  class="bg-(--color-secondary) w-40 h-10 rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
+                >
+                  <a href="#" class="size-full">RENT NOW</a>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section data-name="mission" class="w-full" id="help">
+        <div
+          data-name="missionContainer"
+          class="w-full flex flex-col justify-center items-center py-16 bg-gray-100">
+          <div>
+            <h3
+              class="text-4xl text-(--color-primary) font-bold pb-12 ml-4 md:ml-0"
+            >
+              How everything started
+            </h3>
+          </div>
+          <div
+            data-name="missionCards"
+            class="w-full flex flex-col md:flex-row justify-center items-center"
+          >
+            <div
+              data-name="missionCard"
+              class="rounded-xl border-gray-100 w-[90%] md:w-lg flex flex-col justify-center items-start mx-0 md:mx-4 mb-4 md:mb-0 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+            >
+              <div class="bg-gray-100 rounded-full py-3 px-3 mt-8 mb-4 ml-8">
+                <img src="/assets/user.png" alt="user icon" class="w-10 " />
+              </div>
+              <p
+                class="w-[80%] text-2xl text-(--color-primary) font-medium pb-4 pl-8"
+              >
+                Our Mission
+              </p>
+              <p
+                class="w-[80%] text-(--color-accent-text-light) pb-8 pl-8"
+              >
+                To provide transparent, professional real estate advisory services that empower our clients to make confident decisions. We believe everyone deserves honest guidance when navigating the rental market.
+              </p>
+            </div>
+            <div
+              data-name="missionCard"
+              class="rounded-xl border-gray-100 w-[90%] md:w-lg flex flex-col justify-center items-start mx-0 md:mx-4 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+            >
+              <div class="bg-gray-100 rounded-full py-3 px-3 mt-8 mb-4 ml-8">
+                <img
+                  src="/assets/real-estate.png"
+                  alt="user icon"
+                  class="w-10"
+                />
+              </div>
+              <p
+                class="w-[80%] text-2xl text-(--color-primary) font-medium pb-4 pl-8"
+              >
+                Our Vision
+              </p>
+              <p
+                class="w-[80%] text-(--color-accent-text-light) pb-4 pl-8"
+              >
+                To become the most trusted real estate advisory firm by setting new standards for transparency, integrity, and client satisfaction. We envision a future where finding the right property is stress-free.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section data-name="values" class="w-full" id="customers">
+        <div
+          data-name="valuesContainer"
+          class="flex flex-col justify-center items-center py-16 bg-white"
+        >
+          <div class="w-full lg:w-[90%] flex justify-center items-center">
+            <div class="w-full lg:w-[90%] flex flex-col justify-center items-center pb-12">
+              <h4
+                class="text-4xl text-(--color-primary) font-bold pb-4 ml-4 md:ml-0"
+              >
+                Our core values
+              </h4>
+              <p class="w-[90%] text-(--color-accent-text-light) text-center">
+                These principles guide everything we do and shape how we serve our clients every single day.
+              </p>
+            </div>
+          </div>
+          <div
+            data-name="valuesCards"
+            class="w-full flex flex-col justify-center items-center gap-4 lg:flex-row lg:w-[90%]"
+          >
+            <div
+              data-name="valueCard"
+              class="w-[90%] bg-white rounded-xl flex flex-col gap-4 justify-center items-center shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            >
+              <div class="w-[90%] bg-white pl-4 mt-4">
+                <img
+                  src="/assets/quotation.png"
+                  alt="user icon"
+                  class="w-10 py-4"
+                />
+              </div>
+              <div class="w-[90%] pl-4 pb-8">
+                <p class="text-(--color-primary) font-semibold text-xl pb-4">Trust & Transparency</p>
+                <p class="text-(--color-accent-text-light)">
+                  We believe in complete honesty and transparency in all our dealings. Your trust is our most valuable asset.
+                </p>
+              </div>
+            </div>
+            <div
+              data-name="valueCard"
+              class="w-[90%] bg-white rounded-xl flex flex-col gap-4 justify-center items-center shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            >
+              <div class="w-[90%] bg-white pl-4 mt-4">
+                <img
+                  src="/assets/quotation.png"
+                  alt="user icon"
+                  class="w-10 py-4"
+                />
+              </div>
+              <div class="w-[90%] pl-4 pb-8">
+                <p class="text-(--color-primary) font-semibold text-xl pb-4">Client-First Approach</p>
+                <p class="text-(--color-accent-text-light)">
+                  Your needs and goals drive our recommendations. We listen, understand, and deliver personalized solutions.
+                </p>
+              </div>
+            </div>
+            <div
+              data-name="valueCard"
+              class="w-[90%] bg-white rounded-xl flex flex-col gap-4 justify-center items-center shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+            >
+              <div class="w-[90%] bg-white pl-4 mt-4">
+                <img
+                  src="/assets/quotation.png"
+                  alt="user icon"
+                  class="w-10 py-4"
+                />
+              </div>
+              <div class="w-[90%] pl-4 pb-8">
+                <p class="text-(--color-primary) font-semibold text-xl pb-4">Excellence</p>
+                <p class="text-(--color-accent-text-light)">
+                  We strive for excellence in every interaction, constantly improving our services to exceed expectations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section data-name="why" class="w-full" id="join">
+        <div
+          data-name="whyContainer"
+          class="w-full flex flex-col justify-center items-center py-16"
+        >
+          <div>
+            <h3 class="text-center text-4xl text-(--color-primary) font-bold pb-10">Why Choose Better Housing?</h3>
+          </div>
+          <div data-name="whyCards" class="w-[90%] flex flex-col justify-center items-start">
+            <div data-name="whyCard" class="flex justify-center items-center mb-8 lg:mb-0">
+              <div class="bg-gray-100 rounded-full py-3 px-3 mt-8 mb-8 lg:ml-8 flex justify-center items-center">
+                <img src="/assets/user.png" alt="user icon" class="w-30 five:w-18 sm:w-14 md:w-12 lg:w-6" />
+              </div>
+              <div class="pl-4">
+                <p class="text-(--color-primary) font-semibold text-xl pb-2">Expert Guidance</p>
+                <p class="text-(--color-accent-text-light)">Our team of experienced advisors brings years of real estate expertise to help you navigate complex rental decisions with confidence.</p>
+              </div>
+            </div>
+            <div data-name="whyCard" class="flex justify-center items-center mb-8 lg:mb-0">
+              <div class="bg-gray-100 rounded-full py-3 px-3 mt-8 mb-8 lg:ml-8 flex justify-center items-center">
+                <img src="/assets/user.png" alt="user icon" class="w-30 five:w-18 sm:w-14 md:w-12 lg:w-6" />
+              </div>
+              <div class="pl-4">
+                <p class="text-(--color-primary) font-semibold text-xl pb-2">Comprehensive Support</p>
+                <p class="text-(--color-accent-text-light)">From initial consultation to contract signing and beyond, we're with you every step of the way, ensuring a smooth and stress-free experience.</p>
+              </div>
+            </div>
+            <div data-name="whyCard" class="flex justify-center items-center mb-8 lg:mb-0">
+              <div class="bg-gray-100 rounded-full py-3 px-3 mt-8 mb-8 lg:ml-8 flex justify-center items-center">
+                <img src="/assets/user.png" alt="user icon" class="w-30 five:w-18 sm:w-14 md:w-12 lg:w-6" />
+              </div>
+              <div class="pl-4">
+                <p class="text-(--color-primary) font-semibold text-xl pb-2">Proven Track Record</p>
+                <p class="text-(--color-accent-text-light)">Hundreds of satisfied clients trust us with their real estate needs. Our success is measured by your satisfaction and peace of mind.</p>
+              </div>
+            </div>
+        </div>
+      </section>
+      <section data-name="ready" id="ads">
+        <div data-name="readyContainer">
+          <div
+            class="w-full h-[550px] md:h-[400px] bg-[url('/assets/fauzan.jpg')] bg-cover bg-center flex"
+          >
+            <div class="size-full bg-transparent hidden md:block"></div>
+            <div
+              class="size-full bg-(--color-primary)/80 flex flex-col justify-center items-center"
+            >
+              <h5 class="w-[80%] text-white text-center text-2xl font-semibold pb-4">
+                Ready to Work Together?
+              </h5>
+              <p class="w-[80%] text-white text-center pb-4">
+                Let's discuss your real estate goals and create a personalized plan to help you succeed.
+              </p>
+              <a
+                  href="../index.html#contact"
+                  class="bg-(--color-secondary) w-40 h-10 flex justify-center items-center rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
+                  >Get in Touch</a
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div data-name="footerContainer">
+        <div
+          data-name="footerContainer"
+          class="w-full grid grid-rows-4 six:grid-rows-2 lg:grid-rows-1 justify-center py-12 six:grid-cols-2 lg:grid-cols-4 lg:items-start"
+        >
+          <div class="w-full">
+            <img
+              src="/assets/Bh-logo-header.svg"
+              alt="better housing logo"
+              class="w-45"
+            />
+            <p class="w-60 text-slate-500 six:pl-4">
+              Housing opportunity for companies and tenants.
+            </p>
+            <p class="w-60 text-slate-500 six:pl-4">
+              ⓒ 2025 Better-housing. All rights reserved.
+            </p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start">
+            <p class="font-bold lg:pt-18">Contact information</p>
+            <p class="">+31 628 839 811</p>
+            <p class="">info@better-housing.nl</p>
+            <p class="">KvK: 98346423</p>
+          </div>
+          <div class="w-full pb-4 flex flex-col justify-center items-start">
+            <p class="font-bold six:pl-4 lg:pt-18">Terms and Conditions</p>
+            <p class="six:pl-4">Privacy policy</p>
+            <p class="six:pl-4">Cookie policy</p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start">
+            <p class="font-bold lg:pt-18">Office hours</p>
+            <p class="">Mon – Fri 08:30 – 17:00</p>
+            <p class="">sat – Sun 08:30 – 12:00</p>
+            <p class="w-54">National days and Holidays may interfere.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
