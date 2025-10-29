@@ -8,34 +8,9 @@
   </head>
   <body class="m-0 p-0 overflow-x-hidden">
     <header class="w-full m-0 p-0">
-      <!-- start mobile navBar -->
-      <nav
-        data-name="mobileNav"
-        class="md:hidden w-full flex justify-center items-center fixed z-50"
-      >
-        <div
-          data-name="navContainer"
-          class="bg-white/85 w-full backdrop-blur-sm shadow-2xs"
-        >
-          <div class="w-full flex justify-between items-center bg-transparent">
-            <div data-name="logo" class="flex justify-start items-center">
-              <img
-                src="../assets/Bh-logo-header.svg"
-                alt="Better-housing-logo"
-                class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer"
-              />
-            </div>
-            <div data-name="menu" class="pr-4">
-              <img src="/assets/menu.png" alt="menu icon" class="w-8" />
-            </div>
-          </div>
-        </div>
-      </nav>
-      <!-- end mobile navBar -->
-      <!-- start desktop navBar -->
       <nav
         data-name="dekstopNav"
-        class="hidden md:w-full md:m-0 md:p-0 md:flex md:justify-center md:items-center md:fixed md:z-50"
+        class="w-full md:m-0 md:p-0 md:flex md:justify-center md:items-center fixed z-50"
       >
         <div
           data-name="navContainer"
@@ -44,20 +19,21 @@
           <div class="w-full flex justify-between items-center bg-transparent">
             <div data-name="logo" class="flex justify-start items-center">
               <img
-                src="../assets/Bh-logo-header.svg"
+                src="/assets/Bh-logo-header.svg"
                 alt="Better-housing-logo"
-                class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer"
+                class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer relative z-50"
+                id="logoTwo"
               />
             </div>
             <div
               data-name="links"
-              class="w-full flex justify-around items-center"
+              class="hidden w-full md:flex justify-around items-center"
             >
               <ul class="w-full flex justify-center items-center">
                 <li
                   class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
                 >
-                  <a href="../index.html#home">Home</a>
+                  <a href="../index.html">Home</a>
                 </li>
                 <li
                   class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
@@ -71,20 +47,48 @@
                 </li>
               </ul>
             </div>
-            <div data-name="linkContact" class="flex pr-6">
+            <div data-name="buttons" class="hidden md:flex pr-6">
                 <a
-                  href="../index.html#contact"
+                  href="#contact"
                   class="bg-(--color-secondary) w-40 h-10 flex justify-center items-center rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
                   >Contact</a
                 >
             </div>
+            <div data-name="menu" class="pr-4 fixed top-2.5 right-0 z-50 md:hidden">
+              <img src="/assets/menu.png" alt="menu icon" id="menu" class="w-8" />
+            </div>
+          </div>
+          <div class="w-full flex justify-between items-center bg-transparent" id="linksMobileNav">
+            <!-- expandable nav -->
+            <div
+              data-name="linksMobileNav"
+              class="w-full flex justify-around items-center fixed top-13 bg-white/95 backdrop-blur-sm shadow-2xs"
+            >
+              <ul class="w-full flex flex-col justify-center items-center gap-12 pb-12">
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="../index.html">Home</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="../index.html#help">Services</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="#">About</a>
+                </li>
+              </ul>
+            </div>
+            <!-- end expandable nav -->
           </div>
         </div>
       </nav>
-      <!-- end desktop navBar -->
     </header>
     <main>
-      <section data-name="hero" id="hero">
+      <section data-name="hero" id="heroTwo">
         <div
           class="w-full h-dvh bg-[url('/assets/joao.jpg')] bg-cover bg-start"
         >
@@ -113,7 +117,7 @@
           </div>
         </div>
       </section>
-      <section data-name="mission" class="w-full" id="help">
+      <section data-name="mission" class="w-full">
         <div
           data-name="missionContainer"
           class="w-full flex flex-col justify-center items-center py-16 bg-gray-100">
@@ -171,7 +175,7 @@
           </div>
         </div>
       </section>
-      <section data-name="values" class="w-full" id="customers">
+      <section data-name="values" class="w-full">
         <div
           data-name="valuesContainer"
           class="flex flex-col justify-center items-center py-16 bg-white"
@@ -249,7 +253,7 @@
           </div>
         </div>
       </section>
-      <section data-name="why" class="w-full" id="join">
+      <section data-name="why" class="w-full">
         <div
           data-name="whyContainer"
           class="w-full flex flex-col justify-center items-center py-16"
@@ -287,7 +291,7 @@
             </div>
         </div>
       </section>
-      <section data-name="ready" id="ads">
+      <section data-name="ready">
         <div data-name="readyContainer">
           <div
             class="w-full h-[550px] md:h-[400px] bg-[url('/assets/fauzan.jpg')] bg-cover bg-center flex"
@@ -350,5 +354,7 @@
         </div>
       </div>
     </footer>
+
+    <script src="../src/index.js"></script>
   </body>
 </html>
