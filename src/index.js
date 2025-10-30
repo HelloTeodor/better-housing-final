@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const logoOne = document.getElementById("logoOne");
   const logoTwo = document.getElementById("logoTwo");
+  const heroAds = document.getElementById("heroAds");
 
   // For safety, always check if the element exists before adding the listener
   if (logoOne)
@@ -48,4 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (logoTwo)
     logoTwo.onclick = () => (window.location.href = "/index.html#hero");
+
+  if (heroAds)
+    heroAds.onclick = () => (window.location.href = "/index.html#contact");
 });
