@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/output.css" />
+    <title>Company</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+    <!-- Apple touch icon for Safari and iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+  </head>
+  <body class="m-0 p-0 overflow-x-hidden">
+    <header class="w-full m-0 p-0">
+      <nav
+        data-name="dekstopNav"
+        class="w-full md:m-0 md:p-0 md:flex md:justify-center md:items-center fixed z-50"
+      >
+        <div
+          data-name="navContainer"
+          class="bg-white/85 w-full backdrop-blur-sm shadow-2xs"
+        >
+          <div class="w-full flex justify-between items-center bg-transparent">
+            <div data-name="logo" class="flex justify-start items-center">
+              <img
+                src="./assets/Bh-logo-header.svg"
+                alt="Better-housing-logo"
+                class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer relative z-50"
+                id="logoOne"
+              />
+            </div>
+            <div
+              data-name="links"
+              class="hidden w-full md:flex justify-around items-center"
+            >
+              <ul class="w-full flex justify-center items-center">
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="#">Home</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="#help">Services</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="./pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+            <div data-name="buttons" class="hidden md:flex pr-6">
+              <a
+                href="#contact"
+                class="bg-(--color-secondary) w-40 h-10 flex justify-center items-center rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
+                >Contact</a
+              >
+            </div>
+            <div
+              data-name="menu"
+              class="pr-4 fixed top-2.5 right-0 z-50 md:hidden"
+            >
+              <img
+                src="assets/menu.png"
+                alt="menu icon"
+                id="menu"
+                class="w-8"
+              />
+            </div>
+          </div>
+          <div
+            class="w-full flex justify-between items-center bg-transparent md:hidden"
+            id="linksMobileNav"
+          >
+            <!-- expandable nav -->
+            <div
+              data-name="linksMobileNav"
+              class="w-full flex justify-around items-center fixed top-13 bg-white/85 backdrop-blur-sm shadow-2xs"
+            >
+              <ul
+                class="w-full flex flex-col justify-center items-center gap-12 pb-12"
+              >
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="#">Home</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="#help">Services</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="./pages/about.html">About</a>
+                </li>
+              </ul>
+            </div>
+            <!-- end expandable nav -->
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section data-name="hero" id="heroTwo">
+        <div
+          class="w-full h-[50dvh] bg-[url('/assets/joao.jpg')] bg-cover bg-start"
+        >
+          <div class="w-full h-full flex justify-center items-center">
+            <div class="w-full h-full bg-transparent hidden six:block"></div>
+            <div
+              class="w-full h-full bg-(--color-primary)/50 flex flex-col justify-center items-center"
+            >
+              <div class="w-[80%]">
+                <h1 class="text-white text-4xl font-bold pb-8">Company form</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <article data-name="clientInfo">
+        <div
+          data-name="clientInfoContainer"
+          class="w-full flex justify-center items-center py-8"
+        >
+          <div
+            data-name="clientInfo"
+            class="w-[90%] border-b-2 border-b-gray-300 pb-4"
+          >
+            <h2 class="text-2xl pb-4">Company request form</h2>
+            <p class="pb-2">
+              Are you a company looking to secure accommodation for your
+              employees or project personnel? Please complete the request form
+              below and our team will review your requirements and contact you
+              with suitable housing options tailored to your needs. We aim to
+              make the process simple, efficient and worry-free — so you can
+              focus on your business while we handle the logistics of finding
+              appropriate placements.
+            </p>
+            <p>
+              If you are a landlord interested in listing your property with us,
+              please visit our dedicated Landlord Request Form instead.
+            </p>
+          </div>
+        </div>
+      </article>
+      <section data-name="companyForm">
+        <div
+          data-name="companyFormContainer"
+          class="w-full flex justify-center items-start"
+        >
+          <div data-name="companyFormRequest" class="w-[90%] border-gray-300">
+            <form id="companyForm">
+              <input
+                type="hidden"
+                name="access_key"
+                value="f9348746-ae0d-4c4e-9dad-08c5866dd5d8"
+              />
+              <input
+                type="checkbox"
+                name="botcheck"
+                id=""
+                style="display: none"
+              />
+              <p class="text-xl font-semibold pb-8">Company information</p>
+              <div
+                data-name="companyName"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Company name</p>
+                </div>
+                <div class="w-[70%]">
+                  <input
+                    type="text"
+                    name="companyName"
+                    placeholder="Company name"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="kvkNumber"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>KvK number</p>
+                </div>
+                <div class="w-[70%]">
+                  <input
+                    type="text"
+                    name="kvkNumber"
+                    placeholder="Kvk number"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="contactName"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Contact person</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    class="border"
+                  />
+                  <input
+                    type="text"
+                    name="middleName"
+                    placeholder="Middle name"
+                    class="border"
+                  />
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last name"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="emailPhone"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Contact info</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="email"
+                    name="emailAddress"
+                    placeholder="E-mail address"
+                    class="border"
+                  />
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    placeholder="Phone number"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="address"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Address</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap flex-col gap-2">
+                  <input
+                    type="text"
+                    name="streetAddressLineTwo"
+                    placeholder="Street addres line 1"
+                    class="border min-w-50 max-w-102"
+                  />
+                  <input
+                    type="text"
+                    name="streetAddressLineOne"
+                    placeholder="Street address line 2 (optional)"
+                    class="border min-w-50 max-w-102"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="country_city"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Region</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <select
+                    id="country"
+                    name="country"
+                    class="w-50 border rounded"
+                  >
+                    <option value="" disabled selected>Select country</option>
+                  </select>
+                  <select
+                    id="city"
+                    name="city"
+                    class="w-50 border rounded"
+                    disabled
+                  >
+                    <option value="" disabled selected>Select city</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                data-name="postCode"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Post code/zip code</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="text"
+                    name="postCode"
+                    placeholder="Post code/zip code"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="additionalCompanyInformation"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Additional Company Information</p>
+                </div>
+                <div class="w-[70%]">
+                  <textarea
+                    name="additionalCompanyInformation"
+                    id=""
+                    class="w-full min-w-50 max-w-102 border"
+                    placeholder="Additional company information(optional)..."
+                  ></textarea>
+                </div>
+              </div>
+              <p class="text-xl font-semibold py-8">House preferences</p>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div data-name="footerContainer">
+        <div
+          data-name="footerContainer"
+          class="w-full grid grid-rows-4 six:grid-rows-2 lg:grid-rows-1 justify-center py-12 six:grid-cols-2 lg:grid-cols-4 lg:items-start"
+        >
+          <div class="w-full">
+            <img
+              src="/assets/Bh-logo-header.svg"
+              alt="better housing logo"
+              class="w-45"
+            />
+            <p class="w-60 text-slate-500 six:pl-4">
+              Housing opportunity for companies and tenants.
+            </p>
+            <p class="w-60 text-slate-500 six:pl-4">
+              ⓒ 2025 Better-housing. All rights reserved.
+            </p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start">
+            <p class="font-bold lg:pt-18">Contact information</p>
+            <p class="">+31 628 839 811</p>
+            <p class="">info@better-housing.nl</p>
+            <p class="">KvK: 98346423</p>
+          </div>
+          <div class="w-full pb-4 flex flex-col justify-center items-start">
+            <p class="font-bold six:pl-4 lg:pt-18">Terms and Conditions</p>
+            <a href="/pages/privacy.html" class="six:pl-4 cursor-pointer"
+              >Privacy policy</a
+            >
+            <a href="/pages/cookies.html" class="six:pl-4 cursor-pointer"
+              >Cookie policy</a
+            >
+          </div>
+          <div class="w-full flex flex-col justify-center items-start">
+            <p class="font-bold lg:pt-18">Office hours</p>
+            <p class="">Mon – Fri 08:30 – 17:00</p>
+            <p class="">sat – Sun 08:30 – 12:00</p>
+            <p class="w-54">National days and Holidays may interfere.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/src/index.js"></script>
+    <script type="module" src="/src/forms.js"></script>
+  </body>
+</html>
