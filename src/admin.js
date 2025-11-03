@@ -58,8 +58,19 @@ export async function loadSubmissions() {
       const details = document.createElement("div");
       details.className = "mt-2 hidden flex-col gap-1 text-gray-700";
 
+      // Add createdAt at the top if it exists
+      if (submit.createdAt) {
+        const createdAt = new Date(submit.createdAt);
+        const pDate = document.createElement("p");
+        pDate.innerHTML = `<span class="font-semibold">Submitted:</span> ${createdAt.toLocaleString(
+          "nl-NL",
+          { timeZone: "Europe/Amsterdam" }
+        )}`;
+        details.appendChild(pDate);
+      }
+
       for (const [key, value] of Object.entries(submit)) {
-        if (key === "_id") continue;
+        if (key === "_id" || key === "createdAt") continue; // skip Mongo ID and timestamp (already displayed)
         const p = document.createElement("p");
         p.innerHTML = `<span class="font-semibold">${key}:</span> ${value}`;
         details.appendChild(p);

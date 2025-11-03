@@ -15,8 +15,11 @@ export default async function handler(req, res) {
     const db = client.db("betterHousing"); // your DB name
     const companies = db.collection("companies"); // collection name
 
-    // Insert form data into MongoDB
-    const result = await companies.insertOne(req.body);
+    // Add createdAt timestamp in Netherlands timezone
+    const result = await companies.insertOne({
+      ...req.body,
+      createdAt: new Date(), // store UTC timestamp
+    });
 
     // Respond with success
     res.status(200).json({ insertedId: result.insertedId });
