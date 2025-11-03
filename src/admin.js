@@ -1,19 +1,45 @@
-const listContainer = document.getElementById("submissionsList");
+const loginForm = document.getElementById("loginForm");
+const submissionsList = document.getElementById("submissionsList");
 
-async function loadSubmissions() {
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const password = document.getElementById("adminPassword").value;
+
   try {
-    const res = await fetch("/api/getCompanies"); // make sure case matches your API
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    });
+
+    if (!res.ok) throw new Error("Unauthorized");
+
+    // Hide form and show submissions container
+    loginForm.classList.add("hidden");
+    submissionsList.classList.remove("hidden");
+
+    // Load submissions
+    await loadSubmissions();
+  } catch (err) {
+    alert("Incorrect password!");
+  }
+});
+
+// Fetch and display submissions
+export async function loadSubmissions() {
+  submissionsList.innerHTML = "";
+
+  try {
+    const res = await fetch("/api/getCompanies");
     if (!res.ok) throw new Error("Failed to fetch submissions");
 
     const data = await res.json();
-    listContainer.innerHTML = "";
 
     data.forEach((submit) => {
-      // Card container
       const card = document.createElement("div");
       card.className = "border rounded-md shadow-sm p-4 bg-white flex flex-col";
 
-      // Header row: company name + button
       const header = document.createElement("div");
       header.className = "flex justify-between items-center";
 
@@ -29,18 +55,16 @@ async function loadSubmissions() {
       header.appendChild(nameEl);
       header.appendChild(toggleBtn);
 
-      // Details panel (hidden by default)
       const details = document.createElement("div");
       details.className = "mt-2 hidden flex-col gap-1 text-gray-700";
 
       for (const [key, value] of Object.entries(submit)) {
-        if (key === "_id") continue; // skip Mongo ID
+        if (key === "_id") continue;
         const p = document.createElement("p");
         p.innerHTML = `<span class="font-semibold">${key}:</span> ${value}`;
         details.appendChild(p);
       }
 
-      // Toggle button functionality
       toggleBtn.addEventListener("click", () => {
         details.classList.toggle("hidden");
         toggleBtn.textContent = details.classList.contains("hidden")
@@ -50,12 +74,10 @@ async function loadSubmissions() {
 
       card.appendChild(header);
       card.appendChild(details);
-      listContainer.appendChild(card);
+      submissionsList.appendChild(card);
     });
   } catch (err) {
     console.error(err);
-    listContainer.textContent = "Error loading submissions.";
+    submissionsList.textContent = "Error loading submissions.";
   }
 }
-
-loadSubmissions();

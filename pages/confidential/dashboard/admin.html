@@ -3,15 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Company Submissions</title>
+    <title>Admin - Company Submissions</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-50 min-h-screen">
     <main class="max-w-4xl mx-auto p-8">
-      <h1 class="text-3xl font-bold mb-6 text-gray-900">
-        All Company Submissions
-      </h1>
-      <div id="submissionsList" class="flex flex-col gap-4"></div>
+      <h1 class="text-3xl font-bold mb-6 text-gray-900">Admin Login</h1>
+
+      <form id="loginForm" class="flex gap-2 items-center">
+        <input
+          id="adminPassword"
+          type="password"
+          placeholder="Enter admin password"
+          class="border p-2 rounded flex-1"
+        />
+        <button
+          type="submit"
+          class="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Login
+        </button>
+      </form>
+
+      <div id="submissionsList" class="flex flex-col gap-4 mt-6"></div>
     </main>
 
     <script type="module" src="/src/admin.js"></script>
