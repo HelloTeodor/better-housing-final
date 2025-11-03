@@ -6,6 +6,7 @@ import {
 const country = document.getElementById("country");
 const city = document.getElementById("city");
 
+// Populate country dropdown
 Country.getAllCountries().forEach((c) => {
   country.insertAdjacentHTML(
     "beforeend",
@@ -13,10 +14,35 @@ Country.getAllCountries().forEach((c) => {
   );
 });
 
+// Populate city dropdown on country change
 country.addEventListener("change", () => {
-  city.innerHTML = "";
+  city.innerHTML = "<option value='' disabled selected>Select city</option>";
   city.disabled = false;
   City.getCitiesOfCountry(country.value).forEach((ct) => {
-    city.insertAdjacentHTML("beforeend", `<option>${ct.name}</option>`);
+    city.insertAdjacentHTML(
+      "beforeend",
+      `<option value="${ct.name}">${ct.name}</option>`
+    );
   });
+});
+
+// Handle form submit
+document.getElementById("companyForm").addEventListener("submit", async (e) => {
+  e.preventDefault(); // Prevent page reload
+
+  const data = Object.fromEntries(new FormData(e.target).entries());
+
+  try {
+    const res = await fetch("/api/companies", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) alert("Form submitted successfully!");
+    else alert("Error submitting form.");
+  } catch (err) {
+    console.error(err);
+    alert("Network error, please try again.");
+  }
 });
