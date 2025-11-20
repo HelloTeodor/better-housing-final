@@ -76,7 +76,7 @@ addCityTwo.addEventListener("click", () => {
 
   const select = document.createElement("select");
   select.className = "cityTwo border rounded w-50";
-  select.name = "cityTwo[]";
+  select.name = "alternativeCity";
 
   select.innerHTML = `<option value="" disabled selected>Select city</option>`;
   cities.forEach((ct) => {
