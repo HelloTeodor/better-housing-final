@@ -152,7 +152,10 @@
           data-name="companyFormContainer"
           class="w-full flex justify-center items-start"
         >
-          <div data-name="companyFormRequest" class="w-[90%] border-gray-300">
+          <div
+            data-name="companyFormRequest"
+            class="w-[90%] border-2 border-gray-300 rounded py-4 px-4"
+          >
             <form id="companyForm" action="" method="POST">
               <input
                 type="checkbox"
@@ -323,7 +326,152 @@
                 </div>
               </div>
               <p class="text-xl font-semibold py-8">House preferences</p>
-              <button type="submit">Submit</button>
+              <div data-name="country_city_two" class="pb-4">
+                <div class="flex justify-center items-center">
+                  <div class="w-[30%]">
+                    <p>Region</p>
+                  </div>
+
+                  <div class="w-[70%]">
+                    <select
+                      id="countryTwo"
+                      name="countryTwo"
+                      class="border rounded w-50"
+                    >
+                      <option value="" disabled selected>Select country</option>
+                    </select>
+
+                    <!-- Wrapper for multiple city fields -->
+                    <div id="cityTwoWrapper" class="mt-2 flex flex-col gap-2">
+                      <!-- First city field -->
+                      <div class="city-row flex items-center gap-2">
+                        <select
+                          class="cityTwo border rounded w-50"
+                          name="cityTwo[]"
+                          disabled
+                        >
+                          <option value="" disabled selected>
+                            Select city
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <button
+                      id="addCityTwo"
+                      type="button"
+                      class="mt-2 px-3 py-1 bg-blue-500 text-white rounded"
+                    >
+                      Add another city
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                data-name="rental_period"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Rental period</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input type="date" name="fromDate" class="border" />
+                  <input type="date" name="toDate" class="border" />
+                </div>
+              </div>
+              <div
+                data-name="budget"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Budget per month</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="text"
+                    id="budgetPerMonth"
+                    name="budgetPerMonth"
+                    class="border"
+                    placeholder="0 €"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="nr_of_tenants"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Nr. of tenants</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input type="number" name="nrOfTenants" class="border" />
+                </div>
+              </div>
+              <div
+                data-name="tenants_per_bedroom"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Tenants per bedroom</p>
+                </div>
+
+                <div class="w-[70%] flex flex-col gap-2">
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="oneTenantPerBedroom"
+                      value="true"
+                    />
+                    <span>1 tenant per bedroom</span>
+                  </label>
+
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="sharedBedroomTwoPlus"
+                      value="true"
+                    />
+                    <span>Shared bedroom (2+)</span>
+                  </label>
+
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="itDoesNotMatter"
+                      value="true"
+                    />
+                    <span>it doesn't matter</span>
+                  </label>
+                </div>
+              </div>
+              <div
+                data-name="additionalCompanyInformation"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Additional House Information</p>
+                </div>
+                <div class="w-[70%]">
+                  <textarea
+                    name="additionalHouseInformation"
+                    id=""
+                    class="w-full min-w-50 max-w-102 border"
+                    placeholder="Additional house information(optional)..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <label class="flex items-center gap-2">
+                <input type="checkbox" name="informationAbove" value="true" />
+                <span>I checked and verified the information above.</span>
+              </label>
+              <label class="flex items-center gap-2">
+                <input type="checkbox" name="termsAndConditions" value="true" />
+                <span
+                  >I Understand and Agree with the Terms And Conditions.</span
+                >
+              </label>
+              <button type="submit" class="border">Submit</button>
             </form>
           </div>
         </div>
