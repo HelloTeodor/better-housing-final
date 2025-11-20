@@ -164,6 +164,7 @@
                 style="display: none"
               />
               <p class="text-xl font-semibold pb-8">Company information</p>
+              <input type="hidden" name="CompanyInformation" />
               <div
                 data-name="companyName"
                 class="flex justify-center items-center pb-4"
@@ -326,6 +327,7 @@
                 </div>
               </div>
               <p class="text-xl font-semibold py-8">House preferences</p>
+              <input type="hidden" name="HousePreference" />
               <div data-name="country_city_two" class="pb-4">
                 <div class="flex justify-center items-center">
                   <div class="w-[30%]">
@@ -335,7 +337,7 @@
                   <div class="w-[70%]">
                     <select
                       id="countryTwo"
-                      name="countryTwo"
+                      name="preferredCountry"
                       class="border rounded w-50"
                     >
                       <option value="" disabled selected>Select country</option>
@@ -347,7 +349,7 @@
                       <div class="city-row flex items-center gap-2">
                         <select
                           class="cityTwo border rounded w-50"
-                          name="cityTwo[]"
+                          name="preferredCity"
                           disabled
                         >
                           <option value="" disabled selected>
@@ -426,11 +428,7 @@
                   </label>
 
                   <label class="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      name="sharedBedroomTwoPlus"
-                      value="true"
-                    />
+                    <input type="checkbox" name="sharedBedroom" value="true" />
                     <span>Shared bedroom (2+)</span>
                   </label>
 
@@ -462,7 +460,7 @@
               </div>
 
               <label class="flex items-center gap-2">
-                <input type="checkbox" name="informationAbove" value="true" />
+                <input type="checkbox" name="informationChecked" value="true" />
                 <span>I checked and verified the information above.</span>
               </label>
               <label class="flex items-center gap-2">

@@ -125,7 +125,20 @@ budgetInput.addEventListener("input", () => {
 document.getElementById("companyForm").addEventListener("submit", async (e) => {
   e.preventDefault(); // Prevent page reload
 
-  const data = Object.fromEntries(new FormData(e.target).entries());
+  const formData = new FormData(e.target);
+  const data = {};
+
+  formData.forEach((value, key) => {
+    // If field already exists, turn into array
+    if (data[key]) {
+      if (!Array.isArray(data[key])) {
+        data[key] = [data[key]]; // convert first value into array
+      }
+      data[key].push(value); // add additional values
+    } else {
+      data[key] = value; // first value
+    }
+  });
 
   try {
     const res = await fetch("/api/companies", {
