@@ -25,7 +25,7 @@ loginForm.addEventListener("submit", async (e) => {
     alert("Incorrect password!");
   }
 });
-
+//
 // Fetch and display submissions
 export async function loadSubmissions() {
   submissionsList.innerHTML = "";

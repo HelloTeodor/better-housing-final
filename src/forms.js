@@ -13,7 +13,7 @@ function refreshSelect(select) {
 }
 
 // ----------------------------------------------------
-// COUNTRY/CITY ONE  (mobile-safe rewrite)
+/// COUNTRY/CITY ONE  (mobile-safe rewrite)
 // ----------------------------------------------------
 const country = document.getElementById("country");
 const city = document.getElementById("city");
