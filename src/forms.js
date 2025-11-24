@@ -2,8 +2,7 @@ import {
   Country,
   City,
 } from "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm";
-
-import { handleFormSubmit, showLoader, hideLoader } from "./loader.js";
+import { showLoader, hideLoader } from "./loader.js";
 
 // -------------------------------------------
 // Helper: Fix for iOS/Android dropdown refresh
@@ -15,21 +14,19 @@ function refreshSelect(select) {
 }
 
 // ----------------------------------------------------
-/// COUNTRY/CITY ONE  (mobile-safe rewrite)
+// COUNTRY/CITY ONE
 // ----------------------------------------------------
 const country = document.getElementById("country");
 const city = document.getElementById("city");
 
-// Populate first country dropdown
 Country.getAllCountries().forEach((c) => {
   country.insertAdjacentHTML(
     "beforeend",
     `<option value="${c.isoCode}">${c.name}</option>`
   );
 });
-refreshSelect(country); // mobile fix
+refreshSelect(country);
 
-// Update city dropdown on first country change
 country.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(country.value);
 
@@ -43,26 +40,24 @@ country.addEventListener("change", () => {
     );
   });
 
-  refreshSelect(city); // mobile fix
+  refreshSelect(city);
 });
 
 // ----------------------------------------------------
-// COUNTRY/CITY TWO (mobile-safe + your logic kept)
+// COUNTRY/CITY TWO
 // ----------------------------------------------------
 const countryTwo = document.getElementById("countryTwo");
 const cityTwoWrapper = document.getElementById("cityTwoWrapper");
 const addCityTwo = document.getElementById("addCityTwo");
 
-// Populate countries for countryTwo
 Country.getAllCountries().forEach((c) => {
   countryTwo.insertAdjacentHTML(
     "beforeend",
     `<option value="${c.isoCode}">${c.name}</option>`
   );
 });
-refreshSelect(countryTwo); // mobile fix
+refreshSelect(countryTwo);
 
-// Update all cityTwo dropdowns when countryTwo changes
 countryTwo.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(countryTwo.value);
 
@@ -77,11 +72,10 @@ countryTwo.addEventListener("change", () => {
       );
     });
 
-    refreshSelect(dropdown); // mobile fix
+    refreshSelect(dropdown);
   });
 });
 
-// Add new city row for countryTwo
 addCityTwo.addEventListener("click", () => {
   if (!countryTwo.value) {
     alert("Please select a country first.");
@@ -105,7 +99,7 @@ addCityTwo.addEventListener("click", () => {
     );
   });
 
-  refreshSelect(select); // mobile fix
+  refreshSelect(select);
 
   const removeBtn = document.createElement("button");
   removeBtn.type = "button";
@@ -113,47 +107,37 @@ addCityTwo.addEventListener("click", () => {
   removeBtn.className =
     "px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600";
 
-  removeBtn.addEventListener("click", () => {
-    row.remove();
-  });
+  removeBtn.addEventListener("click", () => row.remove());
 
   row.appendChild(select);
   row.appendChild(removeBtn);
-
   cityTwoWrapper.appendChild(row);
 });
 
 // ----------------------------------------------------
-// Budget input with euro symbol
+// Budget input
 // ----------------------------------------------------
 const budgetInput = document.getElementById("budgetPerMonth");
-
 budgetInput.addEventListener("input", () => {
-  let value = budgetInput.value;
-
-  value = value.replace(/[^\d.,]/g, ""); // allow numbers + . ,
-
-  if (value) {
-    budgetInput.value = `${value} €`;
-  } else {
-    budgetInput.value = "";
-  }
+  let value = budgetInput.value.replace(/[^\d.,]/g, "");
+  budgetInput.value = value ? `${value} €` : "";
 });
 
 // ----------------------------------------------------
-// Form submit with loader
+// Form submit
 // ----------------------------------------------------
 const form = document.getElementById("companyForm");
 
-handleFormSubmit(form, async (e) => {
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  showLoader(); // show loader
+
   const formData = new FormData(e.target);
   const data = {};
 
   formData.forEach((value, key) => {
     if (data[key]) {
-      if (!Array.isArray(data[key])) {
-        data[key] = [data[key]];
-      }
+      if (!Array.isArray(data[key])) data[key] = [data[key]];
       data[key].push(value);
     } else {
       data[key] = value;
@@ -172,5 +156,7 @@ handleFormSubmit(form, async (e) => {
   } catch (err) {
     console.error(err);
     alert("Network error, please try again.");
+  } finally {
+    hideLoader(); // hide loader after submit
   }
 });
