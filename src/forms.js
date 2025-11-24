@@ -3,6 +3,8 @@ import {
   City,
 } from "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm";
 
+import { handleFormSubmit, showLoader, hideLoader } from "./loader.js";
+
 // -------------------------------------------
 // Helper: Fix for iOS/Android dropdown refresh
 // -------------------------------------------
@@ -139,11 +141,11 @@ budgetInput.addEventListener("input", () => {
 });
 
 // ----------------------------------------------------
-// Form submit (unchanged except for array support)
+// Form submit with loader
 // ----------------------------------------------------
-document.getElementById("companyForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+const form = document.getElementById("companyForm");
 
+handleFormSubmit(form, async (e) => {
   const formData = new FormData(e.target);
   const data = {};
 

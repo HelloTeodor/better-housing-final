@@ -1,75 +1,176 @@
-// loader.js
+import {
+  Country,
+  City,
+} from "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm";
 
-// Create loader overlay dynamically
-const loadingOverlay = document.createElement("div");
-loadingOverlay.id = "loadingOverlay";
-loadingOverlay.style.position = "fixed";
-loadingOverlay.style.top = 0;
-loadingOverlay.style.left = 0;
-loadingOverlay.style.width = "100%";
-loadingOverlay.style.height = "100%";
-loadingOverlay.style.backgroundColor = "rgba(0,0,0,0.4)";
-loadingOverlay.style.backdropFilter = "blur(4px)";
-loadingOverlay.style.display = "none";
-loadingOverlay.style.zIndex = 9999;
-loadingOverlay.style.alignItems = "center";
-loadingOverlay.style.justifyContent = "center";
+import { handleFormSubmit, showLoader, hideLoader } from "./loader.js";
 
-// Inner loader box
-const loaderBox = document.createElement("div");
-loaderBox.style.backgroundColor = "white";
-loaderBox.style.padding = "1rem 1.5rem";
-loaderBox.style.borderRadius = "8px";
-loaderBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-loaderBox.style.textAlign = "center";
-
-// Spinner
-const spinner = document.createElement("div");
-spinner.style.width = "32px";
-spinner.style.height = "32px";
-spinner.style.border = "4px solid #ddd";
-spinner.style.borderTop = "4px solid #3b82f6";
-spinner.style.borderRadius = "50%";
-spinner.style.animation = "spin 0.7s linear infinite";
-spinner.style.marginBottom = "0.5rem";
-
-// Text
-const text = document.createElement("p");
-text.textContent = "Sending...";
-text.style.fontWeight = "600";
-
-loaderBox.appendChild(spinner);
-loaderBox.appendChild(text);
-loadingOverlay.appendChild(loaderBox);
-document.body.appendChild(loadingOverlay);
-
-// Keyframes for spinner
-const style = document.createElement("style");
-style.textContent = `
-@keyframes spin { to { transform: rotate(360deg); } }
-`;
-document.head.appendChild(style);
-
-// Functions to show/hide loader
-export function showLoader() {
-  loadingOverlay.style.display = "flex";
-}
-export function hideLoader() {
-  loadingOverlay.style.display = "none";
+// -------------------------------------------
+// Helper: Fix for iOS/Android dropdown refresh
+// -------------------------------------------
+function refreshSelect(select) {
+  select.style.display = "none";
+  void select.offsetHeight; // force repaint
+  select.style.display = "block";
 }
 
-// Optional helper to wrap form submission
-export async function handleFormSubmit(formElement, submitCallback) {
-  formElement.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    showLoader();
+// ----------------------------------------------------
+/// COUNTRY/CITY ONE  (mobile-safe rewrite)
+// ----------------------------------------------------
+const country = document.getElementById("country");
+const city = document.getElementById("city");
 
-    try {
-      await submitCallback(e); // your existing form submit logic here
-    } catch (err) {
-      console.error(err);
-    } finally {
-      hideLoader();
+// Populate first country dropdown
+Country.getAllCountries().forEach((c) => {
+  country.insertAdjacentHTML(
+    "beforeend",
+    `<option value="${c.isoCode}">${c.name}</option>`
+  );
+});
+refreshSelect(country); // mobile fix
+
+// Update city dropdown on first country change
+country.addEventListener("change", () => {
+  const cities = City.getCitiesOfCountry(country.value);
+
+  city.innerHTML = `<option value="" disabled selected>Select city</option>`;
+  city.disabled = false;
+
+  cities.forEach((ct) => {
+    city.insertAdjacentHTML(
+      "beforeend",
+      `<option value="${ct.name}">${ct.name}</option>`
+    );
+  });
+
+  refreshSelect(city); // mobile fix
+});
+
+// ----------------------------------------------------
+// COUNTRY/CITY TWO (mobile-safe + your logic kept)
+// ----------------------------------------------------
+const countryTwo = document.getElementById("countryTwo");
+const cityTwoWrapper = document.getElementById("cityTwoWrapper");
+const addCityTwo = document.getElementById("addCityTwo");
+
+// Populate countries for countryTwo
+Country.getAllCountries().forEach((c) => {
+  countryTwo.insertAdjacentHTML(
+    "beforeend",
+    `<option value="${c.isoCode}">${c.name}</option>`
+  );
+});
+refreshSelect(countryTwo); // mobile fix
+
+// Update all cityTwo dropdowns when countryTwo changes
+countryTwo.addEventListener("change", () => {
+  const cities = City.getCitiesOfCountry(countryTwo.value);
+
+  document.querySelectorAll(".cityTwo").forEach((dropdown) => {
+    dropdown.disabled = false;
+    dropdown.innerHTML = `<option value="" disabled selected>Select city</option>`;
+
+    cities.forEach((ct) => {
+      dropdown.insertAdjacentHTML(
+        "beforeend",
+        `<option value="${ct.name}">${ct.name}</option>`
+      );
+    });
+
+    refreshSelect(dropdown); // mobile fix
+  });
+});
+
+// Add new city row for countryTwo
+addCityTwo.addEventListener("click", () => {
+  if (!countryTwo.value) {
+    alert("Please select a country first.");
+    return;
+  }
+
+  const cities = City.getCitiesOfCountry(countryTwo.value);
+
+  const row = document.createElement("div");
+  row.className = "city-row flex items-center gap-2";
+
+  const select = document.createElement("select");
+  select.className = "cityTwo border rounded w-50";
+  select.name = "alternativeCity";
+
+  select.innerHTML = `<option value="" disabled selected>Select city</option>`;
+  cities.forEach((ct) => {
+    select.insertAdjacentHTML(
+      "beforeend",
+      `<option value="${ct.name}">${ct.name}</option>`
+    );
+  });
+
+  refreshSelect(select); // mobile fix
+
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.textContent = "✕";
+  removeBtn.className =
+    "px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600";
+
+  removeBtn.addEventListener("click", () => {
+    row.remove();
+  });
+
+  row.appendChild(select);
+  row.appendChild(removeBtn);
+
+  cityTwoWrapper.appendChild(row);
+});
+
+// ----------------------------------------------------
+// Budget input with euro symbol
+// ----------------------------------------------------
+const budgetInput = document.getElementById("budgetPerMonth");
+
+budgetInput.addEventListener("input", () => {
+  let value = budgetInput.value;
+
+  value = value.replace(/[^\d.,]/g, ""); // allow numbers + . ,
+
+  if (value) {
+    budgetInput.value = `${value} €`;
+  } else {
+    budgetInput.value = "";
+  }
+});
+
+// ----------------------------------------------------
+// Form submit with loader
+// ----------------------------------------------------
+const form = document.getElementById("companyForm");
+
+handleFormSubmit(form, async (e) => {
+  const formData = new FormData(e.target);
+  const data = {};
+
+  formData.forEach((value, key) => {
+    if (data[key]) {
+      if (!Array.isArray(data[key])) {
+        data[key] = [data[key]];
+      }
+      data[key].push(value);
+    } else {
+      data[key] = value;
     }
   });
-}
+
+  try {
+    const res = await fetch("/api/companies", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) alert("Form submitted successfully!");
+    else alert("Error submitting form.");
+  } catch (err) {
+    console.error(err);
+    alert("Network error, please try again.");
+  }
+});
