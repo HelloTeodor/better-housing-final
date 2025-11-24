@@ -23,7 +23,7 @@
           <div class="w-full flex justify-between items-center bg-transparent">
             <div data-name="logo" class="flex justify-start items-center">
               <img
-                src="./assets/Bh-logo-header.svg"
+                src="/assets/Bh-logo-header.svg"
                 alt="Better-housing-logo"
                 class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer relative z-50"
                 id="logoOne"
@@ -63,7 +63,7 @@
               class="pr-4 fixed top-2.5 right-0 z-50 md:hidden"
             >
               <img
-                src="assets/menu.png"
+                src="/assets/menu.png"
                 alt="menu icon"
                 id="menu"
                 class="w-8"
@@ -459,17 +459,22 @@
                 </div>
               </div>
 
-              <label class="flex items-center gap-2">
+              <label class="flex items-center gap-2 pt-8">
                 <input type="checkbox" name="informationChecked" value="true" />
                 <span>I checked and verified the information above.</span>
               </label>
-              <label class="flex items-center gap-2">
+              <label class="flex items-center gap-2 pb-2">
                 <input type="checkbox" name="termsAndConditions" value="true" />
                 <span
                   >I Understand and Agree with the Terms And Conditions.</span
                 >
               </label>
-              <button type="submit" class="border">Submit</button>
+              <button
+                type="submit"
+                class="border py-1 px-8 rounded bg-(--color-primary) text-white cursor-pointer"
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>

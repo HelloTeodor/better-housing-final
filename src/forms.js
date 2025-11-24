@@ -3,9 +3,18 @@ import {
   City,
 } from "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm";
 
-// ------------------------
-// COUNTRY/CITY ONE
-// ------------------------
+// -------------------------------------------
+// Helper: Fix for iOS/Android dropdown refresh
+// -------------------------------------------
+function refreshSelect(select) {
+  select.style.display = "none";
+  void select.offsetHeight; // force repaint
+  select.style.display = "block";
+}
+
+// ----------------------------------------------------
+// COUNTRY/CITY ONE  (mobile-safe rewrite)
+// ----------------------------------------------------
 const country = document.getElementById("country");
 const city = document.getElementById("city");
 
@@ -16,24 +25,28 @@ Country.getAllCountries().forEach((c) => {
     `<option value="${c.isoCode}">${c.name}</option>`
   );
 });
+refreshSelect(country); // mobile fix
 
 // Update city dropdown on first country change
 country.addEventListener("change", () => {
-  city.innerHTML = "<option value='' disabled selected>Select city</option>";
+  const cities = City.getCitiesOfCountry(country.value);
+
+  city.innerHTML = `<option value="" disabled selected>Select city</option>`;
   city.disabled = false;
 
-  const cities = City.getCitiesOfCountry(country.value);
   cities.forEach((ct) => {
     city.insertAdjacentHTML(
       "beforeend",
       `<option value="${ct.name}">${ct.name}</option>`
     );
   });
+
+  refreshSelect(city); // mobile fix
 });
 
-// ------------------------
-// COUNTRY/CITY TWO (your working code, untouched)
-// ------------------------
+// ----------------------------------------------------
+// COUNTRY/CITY TWO (mobile-safe + your logic kept)
+// ----------------------------------------------------
 const countryTwo = document.getElementById("countryTwo");
 const cityTwoWrapper = document.getElementById("cityTwoWrapper");
 const addCityTwo = document.getElementById("addCityTwo");
@@ -45,6 +58,7 @@ Country.getAllCountries().forEach((c) => {
     `<option value="${c.isoCode}">${c.name}</option>`
   );
 });
+refreshSelect(countryTwo); // mobile fix
 
 // Update all cityTwo dropdowns when countryTwo changes
 countryTwo.addEventListener("change", () => {
@@ -53,12 +67,15 @@ countryTwo.addEventListener("change", () => {
   document.querySelectorAll(".cityTwo").forEach((dropdown) => {
     dropdown.disabled = false;
     dropdown.innerHTML = `<option value="" disabled selected>Select city</option>`;
+
     cities.forEach((ct) => {
       dropdown.insertAdjacentHTML(
         "beforeend",
         `<option value="${ct.name}">${ct.name}</option>`
       );
     });
+
+    refreshSelect(dropdown); // mobile fix
   });
 });
 
@@ -86,7 +103,8 @@ addCityTwo.addEventListener("click", () => {
     );
   });
 
-  // Remove button
+  refreshSelect(select); // mobile fix
+
   const removeBtn = document.createElement("button");
   removeBtn.type = "button";
   removeBtn.textContent = "✕";
@@ -103,17 +121,16 @@ addCityTwo.addEventListener("click", () => {
   cityTwoWrapper.appendChild(row);
 });
 
-// ------------------------
+// ----------------------------------------------------
 // Budget input with euro symbol
-// ------------------------
+// ----------------------------------------------------
 const budgetInput = document.getElementById("budgetPerMonth");
 
 budgetInput.addEventListener("input", () => {
   let value = budgetInput.value;
 
-  // Remove non-digit characters (except dot or comma)
-  value = value.replace(/[^\d.,]/g, "");
-  // Add euro symbol
+  value = value.replace(/[^\d.,]/g, ""); // allow numbers + . ,
+
   if (value) {
     budgetInput.value = `${value} €`;
   } else {
@@ -121,22 +138,23 @@ budgetInput.addEventListener("input", () => {
   }
 });
 
-// Handle form submit
+// ----------------------------------------------------
+// Form submit (unchanged except for array support)
+// ----------------------------------------------------
 document.getElementById("companyForm").addEventListener("submit", async (e) => {
-  e.preventDefault(); // Prevent page reload
+  e.preventDefault();
 
   const formData = new FormData(e.target);
   const data = {};
 
   formData.forEach((value, key) => {
-    // If field already exists, turn into array
     if (data[key]) {
       if (!Array.isArray(data[key])) {
-        data[key] = [data[key]]; // convert first value into array
+        data[key] = [data[key]];
       }
-      data[key].push(value); // add additional values
+      data[key].push(value);
     } else {
-      data[key] = value; // first value
+      data[key] = value;
     }
   });
 
