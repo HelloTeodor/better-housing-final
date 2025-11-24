@@ -68,7 +68,7 @@ addCityTwo.addEventListener("click", () => {
   row.className = "city-row flex items-center gap-2";
 
   const select = document.createElement("select");
-  select.className = "cityTwo border rounded w-50";
+  select.className = "cityTwo border rounded w-full"; // full width for mobile
   select.name = "alternativeCity";
   select.innerHTML = `<option value="" disabled selected>Select city</option>`;
   cities.forEach((ct) => {
@@ -125,11 +125,13 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(data),
     });
 
-    if (res.ok) showMessage("Form submitted successfully!");
-    else showMessage("Error submitting form.", false);
+    if (!res.ok) throw new Error("Server error");
+
+    showMessage("Form submitted successfully!");
+    form.reset(); // reset form after success
   } catch (err) {
     console.error(err);
-    showMessage("Network error, please try again.", false);
+    showMessage("Error submitting form. Check your connection.", false);
   } finally {
     hideLoader();
   }

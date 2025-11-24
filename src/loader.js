@@ -50,11 +50,12 @@ document.head.appendChild(style);
 export function showLoader() {
   loadingOverlay.style.display = "flex";
 }
+
 export function hideLoader() {
   loadingOverlay.style.display = "none";
 }
 
-// Optional: create temporary message under submit button
+// Show message under form
 export function showMessage(message, success = true) {
   let msg = document.getElementById("formMessage");
   if (!msg) {
