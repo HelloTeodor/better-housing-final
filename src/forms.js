@@ -153,6 +153,20 @@ document.getElementById("companyForm").addEventListener("submit", async (e) => {
   const canvas = await html2canvas(formElement, {
     scale: 2,
     useCORS: true,
+    onclone: (clonedDoc) => {
+      const elements = clonedDoc.querySelectorAll("*");
+
+      elements.forEach((el) => {
+        const style = clonedDoc.defaultView.getComputedStyle(el);
+
+        if (style.color.includes("oklch")) {
+          el.style.color = "rgb(0, 0, 0)";
+        }
+        if (style.backgroundColor.includes("oklch")) {
+          el.style.backgroundColor = "rgb(255, 255, 255)";
+        }
+      });
+    },
   });
 
   const screenshotBase64 = canvas.toDataURL("image/png");
