@@ -1,8 +1,9 @@
+// forms.js
 import {
   Country,
   City,
 } from "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm";
-import { showLoader, hideLoader, showMessage } from "./loader.js";
+import { showLoader, hideLoader } from "./loader.js";
 
 // ----------------------------------------------------
 // COUNTRY/CITY ONE
@@ -10,6 +11,7 @@ import { showLoader, hideLoader, showMessage } from "./loader.js";
 const country = document.getElementById("country");
 const city = document.getElementById("city");
 
+// Populate country dropdown
 Country.getAllCountries().forEach((c) => {
   country.insertAdjacentHTML(
     "beforeend",
@@ -17,10 +19,12 @@ Country.getAllCountries().forEach((c) => {
   );
 });
 
+// Enable city dropdown when country changes
 country.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(country.value);
   city.innerHTML = `<option value="" disabled selected>Select city</option>`;
   city.disabled = false;
+
   cities.forEach((ct) => {
     city.insertAdjacentHTML(
       "beforeend",
@@ -36,6 +40,7 @@ const countryTwo = document.getElementById("countryTwo");
 const cityTwoWrapper = document.getElementById("cityTwoWrapper");
 const addCityTwo = document.getElementById("addCityTwo");
 
+// Populate countries for countryTwo
 Country.getAllCountries().forEach((c) => {
   countryTwo.insertAdjacentHTML(
     "beforeend",
@@ -43,6 +48,7 @@ Country.getAllCountries().forEach((c) => {
   );
 });
 
+// Update all cityTwo dropdowns when countryTwo changes
 countryTwo.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(countryTwo.value);
   document.querySelectorAll(".cityTwo").forEach((dropdown) => {
@@ -57,20 +63,23 @@ countryTwo.addEventListener("change", () => {
   });
 });
 
+// Add new city row for countryTwo
 addCityTwo.addEventListener("click", () => {
   if (!countryTwo.value) {
-    showMessage("Please select a country first.", false);
+    alert("Please select a country first.");
     return;
   }
 
   const cities = City.getCitiesOfCountry(countryTwo.value);
+
   const row = document.createElement("div");
   row.className = "city-row flex items-center gap-2";
 
   const select = document.createElement("select");
-  select.className = "cityTwo border rounded w-full"; // full width for mobile
+  select.className = "cityTwo border rounded w-50";
   select.name = "alternativeCity";
   select.innerHTML = `<option value="" disabled selected>Select city</option>`;
+
   cities.forEach((ct) => {
     select.insertAdjacentHTML(
       "beforeend",
@@ -91,11 +100,11 @@ addCityTwo.addEventListener("click", () => {
 });
 
 // ----------------------------------------------------
-// Budget input
+// Budget input formatting
 // ----------------------------------------------------
 const budgetInput = document.getElementById("budgetPerMonth");
 budgetInput.addEventListener("input", () => {
-  const value = budgetInput.value.replace(/[^\d.,]/g, "");
+  let value = budgetInput.value.replace(/[^\d.,]/g, "");
   budgetInput.value = value ? `${value} €` : "";
 });
 
@@ -103,12 +112,14 @@ budgetInput.addEventListener("input", () => {
 // Form submit
 // ----------------------------------------------------
 const form = document.getElementById("companyForm");
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   showLoader();
 
-  const formData = new FormData(form);
+  const formData = new FormData(e.target);
   const data = {};
+
   formData.forEach((value, key) => {
     if (data[key]) {
       if (!Array.isArray(data[key])) data[key] = [data[key]];
@@ -125,13 +136,11 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error("Server error");
-
-    showMessage("Form submitted successfully!");
-    form.reset(); // reset form after success
+    if (res.ok) alert("Form submitted successfully!");
+    else alert("Error submitting form.");
   } catch (err) {
     console.error(err);
-    showMessage("Error submitting form. Check your connection.", false);
+    alert("Network error, please try again.");
   } finally {
     hideLoader();
   }
