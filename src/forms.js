@@ -4,12 +4,11 @@ import {
 } from "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm";
 
 // ------------------------
-// COUNTRY/CITY ONE (fixed for mobile)
+// COUNTRY/CITY ONE (mobile safe)
 // ------------------------
 const country = document.getElementById("country");
 const city = document.getElementById("city");
 
-// Populate first country dropdown
 Country.getAllCountries().forEach((c) => {
   const opt = document.createElement("option");
   opt.value = c.isoCode;
@@ -17,20 +16,18 @@ Country.getAllCountries().forEach((c) => {
   country.appendChild(opt);
 });
 
-// Update city dropdown on first country change
 country.addEventListener("change", () => {
   city.innerHTML = "";
   city.disabled = false;
 
-  const defaultOpt = document.createElement("option");
-  defaultOpt.value = "";
-  defaultOpt.textContent = "Select city";
-  defaultOpt.disabled = true;
-  defaultOpt.selected = true;
-  city.appendChild(defaultOpt);
+  const def = document.createElement("option");
+  def.value = "";
+  def.textContent = "Select city";
+  def.disabled = true;
+  def.selected = true;
+  city.appendChild(def);
 
-  const cities = City.getCitiesOfCountry(country.value);
-  cities.forEach((ct) => {
+  City.getCitiesOfCountry(country.value).forEach((ct) => {
     const opt = document.createElement("option");
     opt.value = ct.name;
     opt.textContent = ct.name;
@@ -76,10 +73,7 @@ countryTwo.addEventListener("change", () => {
 });
 
 addCityTwo.addEventListener("click", () => {
-  if (!countryTwo.value) {
-    alert("Please select a country first.");
-    return;
-  }
+  if (!countryTwo.value) return alert("Please select a country first.");
 
   const cities = City.getCitiesOfCountry(countryTwo.value);
   const row = document.createElement("div");
@@ -103,21 +97,20 @@ addCityTwo.addEventListener("click", () => {
     select.appendChild(opt);
   });
 
-  const removeBtn = document.createElement("button");
-  removeBtn.type = "button";
-  removeBtn.textContent = "✕";
-  removeBtn.className =
-    "px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600";
+  const remove = document.createElement("button");
+  remove.type = "button";
+  remove.textContent = "✕";
+  remove.className = "px-2 py-1 bg-red-500 text-white rounded";
 
-  removeBtn.addEventListener("click", () => row.remove());
+  remove.addEventListener("click", () => row.remove());
 
   row.appendChild(select);
-  row.appendChild(removeBtn);
+  row.appendChild(remove);
   cityTwoWrapper.appendChild(row);
 });
 
 // ------------------------
-// Budget input with euro symbol
+// Budget input with euro
 // ------------------------
 const budgetInput = document.getElementById("budgetPerMonth");
 
@@ -132,9 +125,7 @@ budgetInput.addEventListener("input", () => {
 document.getElementById("companyForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formElement = document.getElementById("companyForm");
-
-  // Convert formData to object (handles duplicates)
+  const form = document.getElementById("companyForm");
   const formData = new FormData(e.target);
   const data = {};
 
@@ -147,34 +138,28 @@ document.getElementById("companyForm").addEventListener("submit", async (e) => {
     }
   });
 
-  // --------------------
-  // TAKE SCREENSHOT HERE
-  // --------------------
-  const canvas = await html2canvas(formElement, {
+  // TAKE SCREENSHOT CLEAN (remove oklch)
+  const canvas = await html2canvas(form, {
     scale: 2,
     useCORS: true,
-    onclone: (clonedDoc) => {
-      const elements = clonedDoc.querySelectorAll("*");
-
-      elements.forEach((el) => {
-        const style = clonedDoc.defaultView.getComputedStyle(el);
-
-        if (style.color.includes("oklch")) {
-          el.style.color = "rgb(0, 0, 0)";
-        }
-        if (style.backgroundColor.includes("oklch")) {
-          el.style.backgroundColor = "rgb(255, 255, 255)";
-        }
+    onclone(doc) {
+      doc.querySelectorAll("*").forEach((el) => {
+        const s = doc.defaultView.getComputedStyle(el);
+        if (s.color.includes("oklch")) el.style.color = "rgb(0,0,0)";
+        if (s.backgroundColor.includes("oklch"))
+          el.style.backgroundColor = "rgb(255,255,255)";
       });
     },
   });
 
-  const screenshotBase64 = canvas.toDataURL("image/png");
-  data.screenshot = screenshotBase64; // attach screenshot to MongoDB document
+  const base64Full = canvas.toDataURL("image/png");
 
-  // --------------------
+  // REMOVE PREFIX → SHORTER IN MONGODB
+  const cleanBase64 = base64Full.replace(/^data:image\/png;base64,/, "");
+
+  data.screenshot = cleanBase64;
+
   // SEND TO SERVER
-  // --------------------
   try {
     const res = await fetch("/api/companies", {
       method: "POST",
@@ -186,6 +171,6 @@ document.getElementById("companyForm").addEventListener("submit", async (e) => {
     else alert("Error submitting form.");
   } catch (err) {
     console.error(err);
-    alert("Network error, please try again.");
+    alert("Network error, try again.");
   }
 });
