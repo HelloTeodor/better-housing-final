@@ -5,65 +5,92 @@ import {
 } from "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm";
 import { showLoader, hideLoader } from "./loader.js";
 
-// ----------------------------------------------------
-// COUNTRY/CITY ONE
-// ----------------------------------------------------
+/* ----------------------------------------------------
+   iOS FIX → force <select> to redraw after changes
+---------------------------------------------------- */
+function refreshSelect(select) {
+  select.style.display = "none";
+  void select.offsetHeight;
+  select.style.display = "block";
+}
+
+/* ----------------------------------------------------
+   COUNTRY/CITY ONE
+---------------------------------------------------- */
 const country = document.getElementById("country");
 const city = document.getElementById("city");
 
-// Populate country dropdown
+// Populate countries
 Country.getAllCountries().forEach((c) => {
-  country.insertAdjacentHTML(
-    "beforeend",
-    `<option value="${c.isoCode}">${c.name}</option>`
-  );
+  const option = document.createElement("option");
+  option.value = c.isoCode;
+  option.textContent = c.name;
+  country.appendChild(option);
 });
+refreshSelect(country);
 
-// Enable city dropdown when country changes
 country.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(country.value);
-  city.innerHTML = `<option value="">Select city</option>`;
+
+  city.innerHTML = "";
   city.disabled = false;
 
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Select city";
+  city.appendChild(placeholder);
+
   cities.forEach((ct) => {
-    city.insertAdjacentHTML(
-      "beforeend",
-      `<option value="${ct.name}">${ct.name}</option>`
-    );
+    const option = document.createElement("option");
+    option.value = ct.name;
+    option.textContent = ct.name;
+    city.appendChild(option);
   });
+
+  refreshSelect(city);
 });
 
-// ----------------------------------------------------
-// COUNTRY/CITY TWO
-// ----------------------------------------------------
+/* ----------------------------------------------------
+   COUNTRY/CITY TWO
+---------------------------------------------------- */
 const countryTwo = document.getElementById("countryTwo");
 const cityTwoWrapper = document.getElementById("cityTwoWrapper");
 const addCityTwo = document.getElementById("addCityTwo");
 
-// Populate countries for countryTwo
+// Populate countries
 Country.getAllCountries().forEach((c) => {
-  countryTwo.insertAdjacentHTML(
-    "beforeend",
-    `<option value="${c.isoCode}">${c.name}</option>`
-  );
+  const option = document.createElement("option");
+  option.value = c.isoCode;
+  option.textContent = c.name;
+  countryTwo.appendChild(option);
 });
+refreshSelect(countryTwo);
 
-// Update all cityTwo dropdowns when countryTwo changes
+// Update all cityTwo selects
 countryTwo.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(countryTwo.value);
+
   document.querySelectorAll(".cityTwo").forEach((dropdown) => {
     dropdown.disabled = false;
-    dropdown.innerHTML = `<option value="">Select city</option>`;
+    dropdown.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select city";
+    dropdown.appendChild(placeholder);
+
     cities.forEach((ct) => {
-      dropdown.insertAdjacentHTML(
-        "beforeend",
-        `<option value="${ct.name}">${ct.name}</option>`
-      );
+      const option = document.createElement("option");
+      option.value = ct.name;
+      option.textContent = ct.name;
+      dropdown.appendChild(option);
     });
+
+    refreshSelect(dropdown);
   });
 });
 
-// Add new city row for countryTwo
+// Add new city row
 addCityTwo.addEventListener("click", () => {
   if (!countryTwo.value) {
     alert("Please select a country first.");
@@ -78,20 +105,27 @@ addCityTwo.addEventListener("click", () => {
   const select = document.createElement("select");
   select.className = "cityTwo border rounded w-50";
   select.name = "alternativeCity";
-  select.innerHTML = `<option value="">Select city</option>`;
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Select city";
+  select.appendChild(placeholder);
 
   cities.forEach((ct) => {
-    select.insertAdjacentHTML(
-      "beforeend",
-      `<option value="${ct.name}">${ct.name}</option>`
-    );
+    const option = document.createElement("option");
+    option.value = ct.name;
+    option.textContent = ct.name;
+    select.appendChild(option);
   });
+
+  refreshSelect(select);
 
   const removeBtn = document.createElement("button");
   removeBtn.type = "button";
   removeBtn.textContent = "✕";
   removeBtn.className =
     "px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600";
+
   removeBtn.addEventListener("click", () => row.remove());
 
   row.appendChild(select);
@@ -99,18 +133,18 @@ addCityTwo.addEventListener("click", () => {
   cityTwoWrapper.appendChild(row);
 });
 
-// ----------------------------------------------------
-// Budget input formatting
-// ----------------------------------------------------
+/* ----------------------------------------------------
+   Budget formatting
+---------------------------------------------------- */
 const budgetInput = document.getElementById("budgetPerMonth");
 budgetInput.addEventListener("input", () => {
   let value = budgetInput.value.replace(/[^\d.,]/g, "");
   budgetInput.value = value ? `${value} €` : "";
 });
 
-// ----------------------------------------------------
-// Form submit
-// ----------------------------------------------------
+/* ----------------------------------------------------
+   Form submit
+---------------------------------------------------- */
 const form = document.getElementById("companyForm");
 
 form.addEventListener("submit", async (e) => {
