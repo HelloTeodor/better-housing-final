@@ -22,7 +22,7 @@ Country.getAllCountries().forEach((c) => {
 // Enable city dropdown when country changes
 country.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(country.value);
-  city.innerHTML = `<option value="" disabled selected>Select city</option>`;
+  city.innerHTML = `<option value="">Select city</option>`;
   city.disabled = false;
 
   cities.forEach((ct) => {
@@ -53,7 +53,7 @@ countryTwo.addEventListener("change", () => {
   const cities = City.getCitiesOfCountry(countryTwo.value);
   document.querySelectorAll(".cityTwo").forEach((dropdown) => {
     dropdown.disabled = false;
-    dropdown.innerHTML = `<option value="" disabled selected>Select city</option>`;
+    dropdown.innerHTML = `<option value="">Select city</option>`;
     cities.forEach((ct) => {
       dropdown.insertAdjacentHTML(
         "beforeend",
@@ -78,7 +78,7 @@ addCityTwo.addEventListener("click", () => {
   const select = document.createElement("select");
   select.className = "cityTwo border rounded w-50";
   select.name = "alternativeCity";
-  select.innerHTML = `<option value="" disabled selected>Select city</option>`;
+  select.innerHTML = `<option value="">Select city</option>`;
 
   cities.forEach((ct) => {
     select.insertAdjacentHTML(
