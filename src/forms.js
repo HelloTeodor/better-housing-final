@@ -1,11 +1,10 @@
 // /src/forms.js
-// Robust iOS-friendly version — dynamic import + safe DOM ops
+// iOS-safe version — fixes disabled <select> re-enable bug
 
 import { showLoader, hideLoader } from "./loader.js";
 
 /* iOS redraw helper */
 function refreshSelect(select) {
-  // Force a reflow to help iOS render the native select popup correctly
   try {
     select.style.display = "none";
     void select.offsetHeight;
@@ -15,7 +14,7 @@ function refreshSelect(select) {
   }
 }
 
-/* small helper to create an <option> element */
+/* helper to create <option> */
 function makeOption(value, text, disabled = false, selected = false) {
   const o = document.createElement("option");
   o.value = value;
@@ -25,7 +24,6 @@ function makeOption(value, text, disabled = false, selected = false) {
   return o;
 }
 
-/* main init wrapped so we can await dynamic import and catch errors */
 async function initForm() {
   const countryEl = document.getElementById("country");
   const cityEl = document.getElementById("city");
@@ -43,87 +41,58 @@ async function initForm() {
     !addCityTwo ||
     !form
   ) {
-    console.error("forms.js: missing expected DOM elements. Aborting init.");
+    console.error("forms.js: missing expected DOM elements.");
     return;
   }
 
-  // Dynamic import of the country-state-city lib (improves iOS compatibility)
+  // ---- load country/state/city lib
   let Country, City;
   try {
-    const module = await import(
-      "https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm"
-    );
+    const module =
+      await import("https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm");
     Country = module.Country;
     City = module.City;
-    console.log(
-      "forms.js: loaded country-state-city library",
-      Country && City ? "OK" : "NO"
-    );
   } catch (err) {
-    console.error("forms.js: Failed to load country-state-city library:", err);
-    // Provide a visible fallback so you notice on mobile
-    alert(
-      "Country data failed to load. Please try again or open devtools for details."
-    );
+    console.error("Failed to load country-state-city lib", err);
+    alert("Failed to load country data.");
     return;
   }
 
-  // ---------- Populate countries (use DocumentFragment)
+  // ---------- Populate main country
   try {
     const countries = Country.getAllCountries() || [];
-    console.log("forms.js: countries count:", countries.length);
-
-    // If countries is empty — log & warn
-    if (!countries.length) {
-      console.warn("forms.js: Country.getAllCountries() returned empty list.");
-    }
-
-    // Build fragment for countryEl
     const frag = document.createDocumentFragment();
-    frag.appendChild(makeOption("", "Select country", true, true)); // placeholder
-
-    countries.forEach((c) => {
-      const opt = makeOption(c.isoCode, c.name);
-      frag.appendChild(opt);
-    });
-
-    // Clear any existing children and append fragment
+    frag.appendChild(makeOption("", "Select country", true, true));
+    countries.forEach((c) => frag.appendChild(makeOption(c.isoCode, c.name)));
     countryEl.innerHTML = "";
     countryEl.appendChild(frag);
     refreshSelect(countryEl);
   } catch (err) {
-    console.error("forms.js: error populating country select:", err);
+    console.error("Error populating country", err);
   }
 
-  // ---------- When primary country changes, populate primary city
+  // ---------- Main country → city
   countryEl.addEventListener("change", () => {
     try {
       const iso = countryEl.value;
       const cities = City.getCitiesOfCountry(iso) || [];
-      console.log(
-        "forms.js: primary country changed to",
-        iso,
-        "cities:",
-        cities.length
-      );
 
-      cityEl.disabled = false;
+      // IMPORTANT: iOS-safe enable
+      cityEl.removeAttribute("disabled");
+
       cityEl.innerHTML = "";
       cityEl.appendChild(makeOption("", "Select city", true, true));
 
-      // append via fragment
       const frag = document.createDocumentFragment();
-      cities.forEach((ct) => {
-        frag.appendChild(makeOption(ct.name, ct.name));
-      });
+      cities.forEach((ct) => frag.appendChild(makeOption(ct.name, ct.name)));
       cityEl.appendChild(frag);
       refreshSelect(cityEl);
     } catch (err) {
-      console.error("forms.js: error populating primary cities:", err);
+      console.error("Error populating cities", err);
     }
   });
 
-  // ---------- Populate countries for countryTwo (preferred)
+  // ---------- Populate preferred country
   try {
     const countries2 = Country.getAllCountries() || [];
     const frag2 = document.createDocumentFragment();
@@ -133,25 +102,20 @@ async function initForm() {
     countryTwo.appendChild(frag2);
     refreshSelect(countryTwo);
   } catch (err) {
-    console.error("forms.js: error populating countryTwo:", err);
+    console.error("Error populating countryTwo", err);
   }
 
-  // When countryTwo changes — update all existing .cityTwo selects
+  // ---------- Preferred country → all cityTwo selects
   countryTwo.addEventListener("change", () => {
     try {
       const iso = countryTwo.value;
       const cities = City.getCitiesOfCountry(iso) || [];
-      console.log(
-        "forms.js: countryTwo changed to",
-        iso,
-        "cities:",
-        cities.length
-      );
 
-      // find all selects with class .cityTwo (initial + added)
       const allCityTwo = cityTwoWrapper.querySelectorAll(".cityTwo");
       allCityTwo.forEach((dropdown) => {
-        dropdown.disabled = false;
+        // IMPORTANT: iOS-safe enable
+        dropdown.removeAttribute("disabled");
+
         dropdown.innerHTML = "";
         dropdown.appendChild(makeOption("", "Select city", true, true));
 
@@ -161,17 +125,18 @@ async function initForm() {
         refreshSelect(dropdown);
       });
     } catch (err) {
-      console.error("forms.js: error populating countryTwo cities:", err);
+      console.error("Error populating preferred cities", err);
     }
   });
 
-  // Add another city for preferred country
+  // ---------- Add another preferred city
   addCityTwo.addEventListener("click", () => {
     try {
       if (!countryTwo.value) {
         alert("Please select a country first.");
         return;
       }
+
       const cities = City.getCitiesOfCountry(countryTwo.value) || [];
 
       const row = document.createElement("div");
@@ -180,9 +145,8 @@ async function initForm() {
       const select = document.createElement("select");
       select.className = "cityTwo border rounded w-full md:w-1/2";
       select.name = "preferredCity";
-      select.disabled = false;
+      // NOTE: do NOT set disabled at all (iOS-safe)
 
-      // placeholder + options
       select.appendChild(makeOption("", "Select city", true, true));
       const frag = document.createDocumentFragment();
       cities.forEach((ct) => frag.appendChild(makeOption(ct.name, ct.name)));
@@ -200,11 +164,11 @@ async function initForm() {
       row.appendChild(removeBtn);
       cityTwoWrapper.appendChild(row);
     } catch (err) {
-      console.error("forms.js: error adding additional city row:", err);
+      console.error("Error adding city row", err);
     }
   });
 
-  // ---------- Budget input formatting (keeps euro symbol)
+  // ---------- Budget formatting
   if (budgetInput) {
     budgetInput.addEventListener("input", () => {
       let value = budgetInput.value.replace(/[^\d.,]/g, "");
@@ -212,7 +176,7 @@ async function initForm() {
     });
   }
 
-  // ---------- Form submit (collects arrays for repeated names)
+  // ---------- Submit
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     showLoader();
@@ -220,7 +184,6 @@ async function initForm() {
     const formData = new FormData(e.target);
     const data = {};
     formData.forEach((value, key) => {
-      // If same field appears multiple times, turn into array
       if (data[key]) {
         if (!Array.isArray(data[key])) data[key] = [data[key]];
         data[key].push(value);
@@ -236,24 +199,19 @@ async function initForm() {
         body: JSON.stringify(data),
       });
 
-      if (res.ok) {
-        alert("Form submitted successfully!");
-      } else {
-        alert("Error submitting form.");
-      }
+      alert(res.ok ? "Form submitted successfully!" : "Error submitting form.");
     } catch (err) {
-      console.error("forms.js: submit error:", err);
-      alert("Network error, please try again.");
+      console.error("Submit error", err);
+      alert("Network error.");
     } finally {
       hideLoader();
     }
   });
 
-  // Final sanity logs
   console.log("forms.js: init completed.");
 }
 
-// Launch after DOM loaded
+// ---- init
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initForm);
 } else {
