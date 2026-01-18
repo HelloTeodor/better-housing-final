@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Country & City Selector</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 2rem;
+        background: #f5f5f5;
+      }
+
+      label {
+        display: block;
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+
+      select {
+        width: 100%;
+        max-width: 400px;
+        padding: 0.5rem;
+        font-size: 1rem;
+        margin-top: 0.3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Location Selector</h1>
+
+    <label for="country">Select Country</label>
+    <select id="country">
+      <option value="">Select country</option>
+    </select>
+
+    <label for="city">Select City</label>
+    <select id="city" disabled>
+      <option value="">Select city</option>
+    </select>
+
+    <script>
+      const API_KEY =
+        "b456c8da5a0b2e0dee73313a7436bc4643649cdbcc13ca187f6f1e79a0d6cd37";
+      const BASE_URL = "https://api.countrystatecity.in/v1";
+
+      const countrySelect = document.getElementById("country");
+      const citySelect = document.getElementById("city");
+
+      /* Fetch helper */
+      async function apiFetch(url) {
+        const res = await fetch(url, {
+          headers: {
+            "X-CSCAPI-KEY": API_KEY,
+          },
+        });
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      }
+
+      /* Populate countries */
+      async function loadCountries() {
+        try {
+          const countries = await apiFetch(`${BASE_URL}/countries`);
+          countries.forEach((c) => {
+            const opt = document.createElement("option");
+            opt.value = c.iso2;
+            opt.textContent = c.name;
+            countrySelect.appendChild(opt);
+          });
+        } catch (err) {
+          console.error("Failed to load countries", err);
+          alert("Failed to load countries");
+        }
+      }
+
+      /* Populate cities for selected country */
+      async function loadCities(countryCode) {
+        citySelect.innerHTML = `<option value="">Select city</option>`;
+        citySelect.disabled = true;
+
+        if (!countryCode) return;
+
+        try {
+          const cities = await apiFetch(
+            `${BASE_URL}/countries/${countryCode}/cities`,
+          );
+
+          cities.forEach((city) => {
+            const opt = document.createElement("option");
+            opt.value = city.name;
+            opt.textContent = city.name;
+            citySelect.appendChild(opt);
+          });
+
+          citySelect.disabled = false;
+        } catch (err) {
+          console.error("Failed to load cities", err);
+          alert("Failed to load cities");
+        }
+      }
+
+      /* Events */
+      countrySelect.addEventListener("change", () => {
+        loadCities(countrySelect.value);
+      });
+
+      /* Init */
+      loadCountries();
+    </script>
+  </body>
+</html>

@@ -1,219 +1,154 @@
-// /src/forms.js
-// iOS-safe version — fixes disabled <select> re-enable bug
+// country-city.js
+// Uses countrystatecity.in API
+// Works with iOS Safari
 
-import { showLoader, hideLoader } from "./loader.js";
+const API_KEY =
+  "b456c8da5a0b2e0dee73313a7436bc4643649cdbcc13ca187f6f1e79a0d6cd37";
+const BASE_URL = "https://api.countrystatecity.in/v1";
 
-/* iOS redraw helper */
-function refreshSelect(select) {
-  try {
-    select.style.display = "none";
-    void select.offsetHeight;
-    select.style.display = "";
-  } catch (err) {
-    // silent
-  }
+/* ---------- Helpers ---------- */
+
+async function apiFetch(url) {
+  const res = await fetch(url, {
+    headers: {
+      "X-CSCAPI-KEY": API_KEY,
+    },
+  });
+  if (!res.ok) throw new Error("API request failed");
+  return res.json();
 }
 
-/* helper to create <option> */
-function makeOption(value, text, disabled = false, selected = false) {
-  const o = document.createElement("option");
-  o.value = value;
-  o.textContent = text;
-  if (disabled) o.disabled = true;
-  if (selected) o.selected = true;
-  return o;
+function createOption(value, text) {
+  const opt = document.createElement("option");
+  opt.value = value;
+  opt.textContent = text;
+  return opt;
 }
 
-async function initForm() {
-  const countryEl = document.getElementById("country");
-  const cityEl = document.getElementById("city");
+/* ---------- DOM Ready ---------- */
+
+document.addEventListener("DOMContentLoaded", initCountryCity);
+
+async function initCountryCity() {
+  const country = document.getElementById("country");
+  const city = document.getElementById("city");
+
   const countryTwo = document.getElementById("countryTwo");
   const cityTwoWrapper = document.getElementById("cityTwoWrapper");
   const addCityTwo = document.getElementById("addCityTwo");
-  const budgetInput = document.getElementById("budgetPerMonth");
-  const form = document.getElementById("companyForm");
 
-  if (
-    !countryEl ||
-    !cityEl ||
-    !countryTwo ||
-    !cityTwoWrapper ||
-    !addCityTwo ||
-    !form
-  ) {
-    console.error("forms.js: missing expected DOM elements.");
+  if (!country || !city || !countryTwo || !cityTwoWrapper || !addCityTwo) {
+    console.error("Country/City elements missing");
     return;
   }
 
-  // ---- load country/state/city lib
-  let Country, City;
   try {
-    const module =
-      await import("https://cdn.jsdelivr.net/npm/country-state-city@3.0.4/+esm");
-    Country = module.Country;
-    City = module.City;
-  } catch (err) {
-    console.error("Failed to load country-state-city lib", err);
-    alert("Failed to load country data.");
-    return;
-  }
+    const countries = await apiFetch(`${BASE_URL}/countries`);
 
-  // ---------- Populate main country
-  try {
-    const countries = Country.getAllCountries() || [];
-    const frag = document.createDocumentFragment();
-    frag.appendChild(makeOption("", "Select country", true, true));
-    countries.forEach((c) => frag.appendChild(makeOption(c.isoCode, c.name)));
-    countryEl.innerHTML = "";
-    countryEl.appendChild(frag);
-    refreshSelect(countryEl);
-  } catch (err) {
-    console.error("Error populating country", err);
-  }
-
-  // ---------- Main country → city
-  countryEl.addEventListener("change", () => {
-    try {
-      const iso = countryEl.value;
-      const cities = City.getCitiesOfCountry(iso) || [];
-
-      // IMPORTANT: iOS-safe enable
-      cityEl.removeAttribute("disabled");
-
-      cityEl.innerHTML = "";
-      cityEl.appendChild(makeOption("", "Select city", true, true));
-
-      const frag = document.createDocumentFragment();
-      cities.forEach((ct) => frag.appendChild(makeOption(ct.name, ct.name)));
-      cityEl.appendChild(frag);
-      refreshSelect(cityEl);
-    } catch (err) {
-      console.error("Error populating cities", err);
-    }
-  });
-
-  // ---------- Populate preferred country
-  try {
-    const countries2 = Country.getAllCountries() || [];
-    const frag2 = document.createDocumentFragment();
-    frag2.appendChild(makeOption("", "Select country", true, true));
-    countries2.forEach((c) => frag2.appendChild(makeOption(c.isoCode, c.name)));
-    countryTwo.innerHTML = "";
-    countryTwo.appendChild(frag2);
-    refreshSelect(countryTwo);
-  } catch (err) {
-    console.error("Error populating countryTwo", err);
-  }
-
-  // ---------- Preferred country → all cityTwo selects
-  countryTwo.addEventListener("change", () => {
-    try {
-      const iso = countryTwo.value;
-      const cities = City.getCitiesOfCountry(iso) || [];
-
-      const allCityTwo = cityTwoWrapper.querySelectorAll(".cityTwo");
-      allCityTwo.forEach((dropdown) => {
-        // IMPORTANT: iOS-safe enable
-        dropdown.removeAttribute("disabled");
-
-        dropdown.innerHTML = "";
-        dropdown.appendChild(makeOption("", "Select city", true, true));
-
-        const frag = document.createDocumentFragment();
-        cities.forEach((ct) => frag.appendChild(makeOption(ct.name, ct.name)));
-        dropdown.appendChild(frag);
-        refreshSelect(dropdown);
-      });
-    } catch (err) {
-      console.error("Error populating preferred cities", err);
-    }
-  });
-
-  // ---------- Add another preferred city
-  addCityTwo.addEventListener("click", () => {
-    try {
-      if (!countryTwo.value) {
-        alert("Please select a country first.");
-        return;
-      }
-
-      const cities = City.getCitiesOfCountry(countryTwo.value) || [];
-
-      const row = document.createElement("div");
-      row.className = "city-row flex items-center gap-2";
-
-      const select = document.createElement("select");
-      select.className = "cityTwo border rounded w-full md:w-1/2";
-      select.name = "preferredCity";
-      // NOTE: do NOT set disabled at all (iOS-safe)
-
-      select.appendChild(makeOption("", "Select city", true, true));
-      const frag = document.createDocumentFragment();
-      cities.forEach((ct) => frag.appendChild(makeOption(ct.name, ct.name)));
-      select.appendChild(frag);
-      refreshSelect(select);
-
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.textContent = "✕";
-      removeBtn.className =
-        "px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600";
-      removeBtn.addEventListener("click", () => row.remove());
-
-      row.appendChild(select);
-      row.appendChild(removeBtn);
-      cityTwoWrapper.appendChild(row);
-    } catch (err) {
-      console.error("Error adding city row", err);
-    }
-  });
-
-  // ---------- Budget formatting
-  if (budgetInput) {
-    budgetInput.addEventListener("input", () => {
-      let value = budgetInput.value.replace(/[^\d.,]/g, "");
-      budgetInput.value = value ? `${value} €` : "";
+    // Populate both country selects
+    countries.forEach((c) => {
+      country.appendChild(createOption(c.iso2, c.name));
+      countryTwo.appendChild(createOption(c.iso2, c.name));
     });
+  } catch (err) {
+    console.error("Failed to load countries", err);
+    alert("Failed to load countries");
   }
 
-  // ---------- Submit
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    showLoader();
+  /* ---------- Primary country → city ---------- */
 
-    const formData = new FormData(e.target);
-    const data = {};
-    formData.forEach((value, key) => {
-      if (data[key]) {
-        if (!Array.isArray(data[key])) data[key] = [data[key]];
-        data[key].push(value);
-      } else {
-        data[key] = value;
-      }
-    });
+  country.addEventListener("change", async () => {
+    city.innerHTML = `<option value="">Select city</option>`;
+    city.disabled = true;
+
+    if (!country.value) return;
 
     try {
-      const res = await fetch("/api/companies", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const cities = await apiFetch(
+        `${BASE_URL}/countries/${country.value}/cities`,
+      );
+
+      cities.forEach((ct) => {
+        city.appendChild(createOption(ct.name, ct.name));
       });
 
-      alert(res.ok ? "Form submitted successfully!" : "Error submitting form.");
+      city.disabled = false;
     } catch (err) {
-      console.error("Submit error", err);
-      alert("Network error.");
-    } finally {
-      hideLoader();
+      console.error("Failed to load cities", err);
+      alert("Failed to load cities");
     }
   });
 
-  console.log("forms.js: init completed.");
-}
+  /* ---------- Preferred country → all preferred cities ---------- */
 
-// ---- init
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initForm);
-} else {
-  initForm();
+  countryTwo.addEventListener("change", async () => {
+    const iso = countryTwo.value;
+    const citySelects = cityTwoWrapper.querySelectorAll(".cityTwo");
+
+    citySelects.forEach((sel) => {
+      sel.innerHTML = `<option value="">Select city</option>`;
+      sel.disabled = true;
+    });
+
+    if (!iso) return;
+
+    try {
+      const cities = await apiFetch(`${BASE_URL}/countries/${iso}/cities`);
+
+      citySelects.forEach((sel) => {
+        cities.forEach((ct) => {
+          sel.appendChild(createOption(ct.name, ct.name));
+        });
+        sel.disabled = false;
+      });
+    } catch (err) {
+      console.error("Failed to load preferred cities", err);
+      alert("Failed to load cities");
+    }
+  });
+
+  /* ---------- Add another preferred city ---------- */
+
+  addCityTwo.addEventListener("click", async () => {
+    if (!countryTwo.value) {
+      alert("Please select a country first.");
+      return;
+    }
+
+    const row = document.createElement("div");
+    row.className = "city-row flex items-center gap-2";
+
+    const select = document.createElement("select");
+    select.className = "cityTwo border rounded w-50";
+    select.name = "preferredCity";
+
+    select.appendChild(createOption("", "Select city"));
+
+    try {
+      const cities = await apiFetch(
+        `${BASE_URL}/countries/${countryTwo.value}/cities`,
+      );
+
+      cities.forEach((ct) => {
+        select.appendChild(createOption(ct.name, ct.name));
+      });
+
+      select.disabled = false;
+    } catch (err) {
+      console.error("Failed to load cities", err);
+      alert("Failed to load cities");
+      return;
+    }
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.textContent = "✕";
+    removeBtn.className =
+      "px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600";
+    removeBtn.addEventListener("click", () => row.remove());
+
+    row.appendChild(select);
+    row.appendChild(removeBtn);
+    cityTwoWrapper.appendChild(row);
+  });
 }
