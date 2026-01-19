@@ -1,3 +1,5 @@
+console.log("popup.js loaded");
+
 let popupEl;
 
 function createPopup() {
