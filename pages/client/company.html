@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -154,7 +154,7 @@
         >
           <div
             data-name="companyFormRequest"
-            class="w-[90%] border-2 border-gray-300 rounded py-4 px-4"
+            class="w-[90%] border-0 sm:border-2 sm:border-gray-300 rounded py-4 px-4"
           >
             <form id="companyForm" action="" method="POST">
               <input
@@ -276,7 +276,7 @@
                 <div class="w-[30%]">
                   <p>Region</p>
                 </div>
-                <div class="w-[70%] flex">
+                <div class="w-[70%] flex flex-wrap gap-2">
                   <select
                     id="country"
                     name="country"
@@ -287,7 +287,7 @@
                   <select
                     id="city"
                     name="city"
-                    class="w-50 border rounded"
+                    class="min-w-50 border rounded"
                     disabled
                   >
                     <option value="">Select city</option>
@@ -334,7 +334,7 @@
                     <p>Region</p>
                   </div>
 
-                  <div class="w-[70%]">
+                  <div class="w-[70%] flex flex-col gap-2">
                     <select
                       id="countryTwo"
                       name="preferredCountry"
@@ -346,9 +346,9 @@
                     <!-- Wrapper for multiple city fields -->
                     <div id="cityTwoWrapper" class="">
                       <!-- First city field -->
-                      <div class="city-row flex items-center gap-2">
+                      <div class="city-row flex items-center">
                         <select
-                          class="cityTwo border rounded w-50"
+                          class="cityTwo border rounded min-w-50"
                           name="preferredCity"
                           disabled
                         >
@@ -360,7 +360,7 @@
                     <button
                       id="addCityTwo"
                       type="button"
-                      class="mt-2 px-3 py-1 bg-blue-500 text-white rounded"
+                      class="px-3 py-1 bg-blue-500 text-white rounded w-50"
                     >
                       Add another city
                     </button>
@@ -523,7 +523,8 @@
     </footer>
 
     <script src="/src/index.js"></script>
-    <script type="module" src="/src/forms.js"></script>
+    <script type="module" src="/src/region.js"></script>
     <script type="module" src="/src/loader.js"></script>
+    <script type="module" src="/src/formdata.js"></script>
   </body>
 </html>
