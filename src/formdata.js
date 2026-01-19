@@ -1,11 +1,11 @@
-// formdata.js
 import { showLoader, hideLoader } from "./loader.js";
+import { showPopup } from "./popup.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("companyForm");
   if (!form) return;
 
-  // ---------- FLATPICKR DATE PICKER ----------
+  // ---------- FLATPICKR ----------
   flatpickr("#fromDate", {
     dateFormat: "d/m/Y",
     allowInput: true,
@@ -16,16 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
     allowInput: true,
   });
 
-  // ---------- FORM SUBMISSION ----------
+  // ---------- SUBMIT ----------
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    showLoader(); // 🔵 SHOW LOADER IMMEDIATELY
+    showLoader(); // 👈 START LOADER
 
     const formData = new FormData(form);
     const data = {};
 
-    // Convert FormData → object
     formData.forEach((value, key) => {
       if (data[key]) {
         if (!Array.isArray(data[key])) data[key] = [data[key]];
@@ -35,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // ---------- FULL COUNTRY NAMES ----------
+    // Country full name
     const countrySelect = document.getElementById("country");
     if (countrySelect && data.country) {
       data.country = countrySelect.options[countrySelect.selectedIndex].text;
@@ -47,21 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
         countryTwoSelect.options[countryTwoSelect.selectedIndex].text;
     }
 
-    // ---------- KEEP DATES AS STRING ----------
+    // Dates stay as strings
     data.fromDate = data.fromDate || "";
     data.toDate = data.toDate || "";
 
-    // ---------- MULTIPLE PREFERRED CITIES ----------
+    // Preferred cities
     const cityTwoWrapper = document.getElementById("cityTwoWrapper");
-    if (cityTwoWrapper) {
-      const citySelects = cityTwoWrapper.querySelectorAll(".cityTwo");
-      data.preferredCity = [];
-      citySelects.forEach((sel) => {
-        if (sel.value) data.preferredCity.push(sel.value);
-      });
-    }
+    data.preferredCity = [];
+    cityTwoWrapper
+      ?.querySelectorAll(".cityTwo")
+      .forEach((sel) => sel.value && data.preferredCity.push(sel.value));
 
-    // ---------- SEND ----------
     try {
       const res = await fetch("/api/companies", {
         method: "POST",
@@ -69,19 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Submission failed");
-      }
+      hideLoader(); // 👈 STOP LOADER
 
-      // ✅ SUCCESS
-      form.reset();
+      if (res.ok) {
+        showPopup("Form submitted successfully!", "success");
 
-      // Reset dynamic city selects
-      if (cityTwoWrapper) {
-        const cityRows = cityTwoWrapper.querySelectorAll(".city-row");
-        cityRows.forEach((row, idx) => {
-          if (idx === 0) {
+        form.reset();
+
+        // Reset dynamic city rows
+        const rows = cityTwoWrapper.querySelectorAll(".city-row");
+        rows.forEach((row, i) => {
+          if (i === 0) {
             const select = row.querySelector("select");
             select.value = "";
             select.disabled = true;
@@ -89,12 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
             row.remove();
           }
         });
+      } else {
+        const err = await res.json();
+        showPopup(err.error || "Submission failed", "error");
       }
     } catch (err) {
-      console.error("Form submission error:", err);
-      alert(err.message || "Network error");
-    } finally {
-      hideLoader(); // 🔵 ALWAYS HIDE LOADER
+      console.error(err);
+      hideLoader();
+      showPopup("Network error. Please try again.", "error");
     }
   });
 });
