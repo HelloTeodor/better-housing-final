@@ -1,5 +1,4 @@
-import { showLoader, hideLoader } from "./loader.js";
-import { showPopup } from "./popup.js";
+import { showLoader, showSuccess, showError } from "./loader.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("companyForm");
@@ -20,11 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    showLoader(); // 👈 START LOADER
+    // 👇 SHOW LOADING STATE
+    showLoader("Sending...");
 
     const formData = new FormData(form);
     const data = {};
 
+    // Convert FormData to object
     formData.forEach((value, key) => {
       if (data[key]) {
         if (!Array.isArray(data[key])) data[key] = [data[key]];
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Country full name
+    // ---------- COUNTRY FULL NAMES ----------
     const countrySelect = document.getElementById("country");
     if (countrySelect && data.country) {
       data.country = countrySelect.options[countrySelect.selectedIndex].text;
@@ -46,17 +47,18 @@ document.addEventListener("DOMContentLoaded", () => {
         countryTwoSelect.options[countryTwoSelect.selectedIndex].text;
     }
 
-    // Dates stay as strings
+    // ---------- KEEP DATES AS STRINGS ----------
     data.fromDate = data.fromDate || "";
     data.toDate = data.toDate || "";
 
-    // Preferred cities
+    // ---------- PREFERRED CITIES ----------
     const cityTwoWrapper = document.getElementById("cityTwoWrapper");
     data.preferredCity = [];
     cityTwoWrapper
       ?.querySelectorAll(".cityTwo")
       .forEach((sel) => sel.value && data.preferredCity.push(sel.value));
 
+    // ---------- SEND ----------
     try {
       const res = await fetch("/api/companies", {
         method: "POST",
@@ -64,15 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(data),
       });
 
-      hideLoader(); // 👈 STOP LOADER
-
       if (res.ok) {
-        showPopup("Form submitted successfully!", "success");
+        // ✅ SUCCESS STATE
+        showSuccess("Form submitted successfully!");
 
         form.reset();
 
         // Reset dynamic city rows
-        const rows = cityTwoWrapper.querySelectorAll(".city-row");
+        const rows = cityTwoWrapper?.querySelectorAll(".city-row") || [];
         rows.forEach((row, i) => {
           if (i === 0) {
             const select = row.querySelector("select");
@@ -84,12 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       } else {
         const err = await res.json();
-        showPopup(err.error || "Submission failed", "error");
+        showError(err.error || "Submission failed");
       }
     } catch (err) {
-      console.error(err);
-      hideLoader();
-      showPopup("Network error. Please try again.", "error");
+      console.error("Submit error:", err);
+      showError("Network error. Please try again.");
     }
   });
 });
