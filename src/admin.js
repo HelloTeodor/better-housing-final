@@ -64,7 +64,7 @@ export async function loadSubmissions() {
         const pDate = document.createElement("p");
         pDate.innerHTML = `<span class="font-semibold">Submitted:</span> ${createdAt.toLocaleString(
           "nl-NL",
-          { timeZone: "Europe/Amsterdam" }
+          { timeZone: "Europe/Amsterdam" },
         )}`;
         details.appendChild(pDate);
       }
@@ -85,7 +85,7 @@ export async function loadSubmissions() {
 
       card.appendChild(header);
       card.appendChild(details);
-      submissionsList.appendChild(card);
+      submissionsList.prepend(card);
     });
   } catch (err) {
     console.error(err);
