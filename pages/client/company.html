@@ -9,6 +9,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
     <!-- Apple touch icon for Safari and iOS -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <!-- Flatpickr CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
   </head>
   <body class="m-0 p-0 overflow-x-hidden">
     <header class="w-full m-0 p-0">
@@ -375,8 +380,20 @@
                   <p>Rental period</p>
                 </div>
                 <div class="w-[70%] flex flex-wrap gap-2">
-                  <input type="date" name="fromDate" class="border" />
-                  <input type="date" name="toDate" class="border" />
+                  <input
+                    type="text"
+                    id="fromDate"
+                    name="fromDate"
+                    class="border"
+                    placeholder="dd/mm/yyyy"
+                  />
+                  <input
+                    type="text"
+                    id="toDate"
+                    name="toDate"
+                    class="border"
+                    placeholder="dd/mm/yyyy"
+                  />
                 </div>
               </div>
               <div
@@ -526,5 +543,7 @@
     <script type="module" src="/src/region.js"></script>
     <script type="module" src="/src/loader.js"></script>
     <script type="module" src="/src/formdata.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   </body>
 </html>
