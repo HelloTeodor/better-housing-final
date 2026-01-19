@@ -1,6 +1,3 @@
-// formdata.js
-
-// Wait for DOM to load
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("companyForm");
   if (!form) return;
@@ -45,18 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
         countryTwoSelect.options[countryTwoSelect.selectedIndex].text;
     }
 
-    // ---------- CONVERT DATES TO ISO ----------
-    if (data.fromDate) {
-      const [d, m, y] = data.fromDate.split("/");
-      data.fromDate = new Date(`${y}-${m}-${d}`);
-    }
-    if (data.toDate) {
-      const [d, m, y] = data.toDate.split("/");
-      data.toDate = new Date(`${y}-${m}-${d}`);
-    }
+    // ---------- KEEP DATES AS STRING ----------
+    data.fromDate = data.fromDate || "";
+    data.toDate = data.toDate || "";
 
     // ---------- COLLECT MULTIPLE PREFERRED CITIES ----------
-    // All selects with class .cityTwo
     const cityTwoWrapper = document.getElementById("cityTwoWrapper");
     if (cityTwoWrapper) {
       const citySelects = cityTwoWrapper.querySelectorAll(".cityTwo");
