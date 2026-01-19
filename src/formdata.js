@@ -1,10 +1,13 @@
+// formdata.js
+import { showLoader, hideLoader } from "./loader.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("companyForm");
   if (!form) return;
 
   // ---------- FLATPICKR DATE PICKER ----------
   flatpickr("#fromDate", {
-    dateFormat: "d/m/Y", // dd/mm/yyyy
+    dateFormat: "d/m/Y",
     allowInput: true,
   });
 
@@ -17,10 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    showLoader(); // 🔵 SHOW LOADER IMMEDIATELY
+
     const formData = new FormData(form);
     const data = {};
 
-    // Convert FormData into plain object
+    // Convert FormData → object
     formData.forEach((value, key) => {
       if (data[key]) {
         if (!Array.isArray(data[key])) data[key] = [data[key]];
@@ -30,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // ---------- REPLACE COUNTRY ISO WITH FULL NAME ----------
+    // ---------- FULL COUNTRY NAMES ----------
     const countrySelect = document.getElementById("country");
     if (countrySelect && data.country) {
       data.country = countrySelect.options[countrySelect.selectedIndex].text;
@@ -46,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     data.fromDate = data.fromDate || "";
     data.toDate = data.toDate || "";
 
-    // ---------- COLLECT MULTIPLE PREFERRED CITIES ----------
+    // ---------- MULTIPLE PREFERRED CITIES ----------
     const cityTwoWrapper = document.getElementById("cityTwoWrapper");
     if (cityTwoWrapper) {
       const citySelects = cityTwoWrapper.querySelectorAll(".cityTwo");
@@ -56,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // ---------- SEND TO API ----------
+    // ---------- SEND ----------
     try {
       const res = await fetch("/api/companies", {
         method: "POST",
@@ -64,11 +69,16 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(data),
       });
 
-      if (res.ok) {
-        alert("Form submitted successfully!");
-        form.reset();
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Submission failed");
+      }
 
-        // Reset dynamic city selects
+      // ✅ SUCCESS
+      form.reset();
+
+      // Reset dynamic city selects
+      if (cityTwoWrapper) {
         const cityRows = cityTwoWrapper.querySelectorAll(".city-row");
         cityRows.forEach((row, idx) => {
           if (idx === 0) {
@@ -76,16 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
             select.value = "";
             select.disabled = true;
           } else {
-            row.remove(); // remove extra rows
+            row.remove();
           }
         });
-      } else {
-        const err = await res.json();
-        alert(err.error || "Submission failed");
       }
     } catch (err) {
       console.error("Form submission error:", err);
-      alert("Network error, please try again.");
+      alert(err.message || "Network error");
+    } finally {
+      hideLoader(); // 🔵 ALWAYS HIDE LOADER
     }
   });
 });
