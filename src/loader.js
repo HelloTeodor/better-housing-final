@@ -1,14 +1,10 @@
 // /src/loader.js
 
-// Create loader overlay (module)
+// Create overlay
 const loadingOverlay = document.createElement("div");
-loadingOverlay.id = "loadingOverlay";
 Object.assign(loadingOverlay.style, {
   position: "fixed",
-  top: "0",
-  left: "0",
-  width: "100%",
-  height: "100%",
+  inset: "0",
   backgroundColor: "rgba(0,0,0,0.4)",
   backdropFilter: "blur(4px)",
   display: "none",
@@ -17,48 +13,84 @@ Object.assign(loadingOverlay.style, {
   justifyContent: "center",
 });
 
-// Inner box
+// Box
 const box = document.createElement("div");
 Object.assign(box.style, {
   background: "white",
-  padding: "1rem 1.5rem",
-  borderRadius: "8px",
+  padding: "1.25rem 1.75rem",
+  borderRadius: "10px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+  gap: "8px",
+  minWidth: "220px",
+  boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+  transition: "transform 0.2s ease, opacity 0.2s ease",
 });
 
-// spinner
+// Spinner
 const spinner = document.createElement("div");
 Object.assign(spinner.style, {
-  width: "32px",
-  height: "32px",
-  border: "4px solid #ddd",
+  width: "34px",
+  height: "34px",
+  border: "4px solid #e5e7eb",
   borderTop: "4px solid #3b82f6",
   borderRadius: "50%",
   animation: "spin 0.7s linear infinite",
-  marginBottom: "8px",
 });
 
+// Text
 const text = document.createElement("div");
-text.textContent = "Sending...";
-text.style.fontWeight = "600";
+Object.assign(text.style, {
+  fontWeight: "600",
+  fontSize: "0.95rem",
+  color: "#111827",
+  textAlign: "center",
+});
 
 box.appendChild(spinner);
 box.appendChild(text);
 loadingOverlay.appendChild(box);
 document.body.appendChild(loadingOverlay);
 
-// keyframes
+// Keyframes
 const style = document.createElement("style");
-style.textContent = "@keyframes spin { to { transform: rotate(360deg); } }";
+style.textContent = `
+@keyframes spin { to { transform: rotate(360deg); } }
+`;
 document.head.appendChild(style);
 
-// exported functions
-export function showLoader() {
+// ---------------- API ----------------
+
+export function showLoader(message = "Sending...") {
+  text.textContent = message;
+  text.style.color = "#111827";
+
+  spinner.style.display = "block";
+  spinner.style.borderTopColor = "#3b82f6";
+
   loadingOverlay.style.display = "flex";
 }
-export function hideLoader() {
-  loadingOverlay.style.display = "none";
+
+export function showSuccess(message = "Submitted successfully!") {
+  spinner.style.display = "none";
+  text.textContent = message;
+  text.style.color = "#16a34a";
+
+  autoHide();
+}
+
+export function showError(message = "Submission failed") {
+  spinner.style.display = "none";
+  text.textContent = message;
+  text.style.color = "#dc2626";
+
+  autoHide();
+}
+
+function autoHide() {
+  setTimeout(() => {
+    loadingOverlay.style.display = "none";
+    spinner.style.display = "block";
+  }, 1800);
 }
