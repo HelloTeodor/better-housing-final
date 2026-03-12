@@ -1,8 +1,6 @@
-// admin.js
 const loginForm = document.getElementById("loginForm");
 const submissionsList = document.getElementById("submissionsList");
 
-// ----- LOGIN -----
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -17,7 +15,7 @@ loginForm.addEventListener("submit", async (e) => {
 
     if (!res.ok) throw new Error("Unauthorized");
 
-    // Hide login form, show submissions container
+    // Hide form and show submissions container
     loginForm.classList.add("hidden");
     submissionsList.classList.remove("hidden");
 
@@ -27,10 +25,10 @@ loginForm.addEventListener("submit", async (e) => {
     alert("Incorrect password!");
   }
 });
-
-// ----- FETCH & DISPLAY SUBMISSIONS -----
+//
+// Fetch and display submissions
 export async function loadSubmissions() {
-  submissionsList.innerHTML = ""; // clear existing
+  submissionsList.innerHTML = "";
 
   try {
     const res = await fetch("/api/getCompanies");
@@ -38,17 +36,10 @@ export async function loadSubmissions() {
 
     const data = await res.json();
 
-    if (!data.length) {
-      submissionsList.textContent = "No submissions yet.";
-      return;
-    }
-
     data.forEach((submit) => {
       const card = document.createElement("div");
-      card.className =
-        "border rounded-md shadow-sm p-4 bg-white flex flex-col mb-4";
+      card.className = "border rounded-md shadow-sm p-4 bg-white flex flex-col";
 
-      // Header with company name & toggle
       const header = document.createElement("div");
       header.className = "flex justify-between items-center";
 
@@ -64,11 +55,10 @@ export async function loadSubmissions() {
       header.appendChild(nameEl);
       header.appendChild(toggleBtn);
 
-      // Details section (hidden by default)
       const details = document.createElement("div");
       details.className = "mt-2 hidden flex-col gap-1 text-gray-700";
 
-      // Submission date
+      // Add createdAt at the top if it exists
       if (submit.createdAt) {
         const createdAt = new Date(submit.createdAt);
         const pDate = document.createElement("p");
@@ -79,31 +69,13 @@ export async function loadSubmissions() {
         details.appendChild(pDate);
       }
 
-      // Other fields
       for (const [key, value] of Object.entries(submit)) {
-        if (key === "_id" || key === "createdAt") continue;
-
-        if (key === "photos" && Array.isArray(value)) {
-          // Photos section
-          const photosDiv = document.createElement("div");
-          photosDiv.className = "flex flex-wrap gap-2 mt-2";
-
-          value.forEach((photo) => {
-            const img = document.createElement("img");
-            img.src = `/uploads/${photo.filename}`; // make sure backend serves uploads
-            img.className = "w-24 h-24 object-cover border rounded";
-            photosDiv.appendChild(img);
-          });
-
-          details.appendChild(photosDiv);
-        } else {
-          const p = document.createElement("p");
-          p.innerHTML = `<span class="font-semibold">${key}:</span> ${value}`;
-          details.appendChild(p);
-        }
+        if (key === "_id" || key === "createdAt") continue; // skip Mongo ID and timestamp (already displayed)
+        const p = document.createElement("p");
+        p.innerHTML = `<span class="font-semibold">${key}:</span> ${value}`;
+        details.appendChild(p);
       }
 
-      // Toggle show/hide
       toggleBtn.addEventListener("click", () => {
         details.classList.toggle("hidden");
         toggleBtn.textContent = details.classList.contains("hidden")
