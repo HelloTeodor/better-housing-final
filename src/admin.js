@@ -1,39 +1,9 @@
-const loginForm = document.getElementById("loginForm");
-const submissionsList = document.getElementById("submissionsList");
-
-loginForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const password = document.getElementById("adminPassword").value;
-
-  try {
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
-
-    if (!res.ok) throw new Error("Unauthorized");
-
-    // Hide form and show submissions container
-    loginForm.classList.add("hidden");
-    submissionsList.classList.remove("hidden");
-
-    // Load submissions
-    await loadSubmissions();
-  } catch (err) {
-    alert("Incorrect password!");
-  }
-});
-//
-// Fetch and display submissions
 export async function loadSubmissions() {
   submissionsList.innerHTML = "";
 
   try {
     const res = await fetch("/api/getCompanies");
     if (!res.ok) throw new Error("Failed to fetch submissions");
-
     const data = await res.json();
 
     data.forEach((submit) => {
@@ -58,22 +28,34 @@ export async function loadSubmissions() {
       const details = document.createElement("div");
       details.className = "mt-2 hidden flex-col gap-1 text-gray-700";
 
-      // Add createdAt at the top if it exists
+      // Dates
       if (submit.createdAt) {
         const createdAt = new Date(submit.createdAt);
         const pDate = document.createElement("p");
-        pDate.innerHTML = `<span class="font-semibold">Submitted:</span> ${createdAt.toLocaleString(
-          "nl-NL",
-          { timeZone: "Europe/Amsterdam" },
-        )}`;
+        pDate.innerHTML = `<span class="font-semibold">Submitted:</span> ${createdAt.toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" })}`;
         details.appendChild(pDate);
       }
 
       for (const [key, value] of Object.entries(submit)) {
-        if (key === "_id" || key === "createdAt") continue; // skip Mongo ID and timestamp (already displayed)
-        const p = document.createElement("p");
-        p.innerHTML = `<span class="font-semibold">${key}:</span> ${value}`;
-        details.appendChild(p);
+        if (key === "_id" || key === "createdAt") continue;
+
+        if (key === "photos" && Array.isArray(value)) {
+          const photosDiv = document.createElement("div");
+          photosDiv.className = "flex flex-wrap gap-2 mt-2";
+
+          value.forEach((photo) => {
+            const img = document.createElement("img");
+            img.src = `/uploads/${photo.filename}`; // asigură-te că serverul servește folderul uploads
+            img.className = "w-24 h-24 object-cover border rounded";
+            photosDiv.appendChild(img);
+          });
+
+          details.appendChild(photosDiv);
+        } else {
+          const p = document.createElement("p");
+          p.innerHTML = `<span class="font-semibold">${key}:</span> ${value}`;
+          details.appendChild(p);
+        }
       }
 
       toggleBtn.addEventListener("click", () => {
