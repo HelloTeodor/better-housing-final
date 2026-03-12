@@ -8,11 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!form) return;
 
-  // ======== FLATPICKR DATES =========
-  flatpickr("#fromDate", { dateFormat: "d/m/Y", allowInput: true });
-  flatpickr("#toDate", { dateFormat: "d/m/Y", allowInput: true });
-
-  // ======== HANDLE PHOTOS ========
   let allPhotos = [];
 
   function updatePreview() {
@@ -53,15 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
     fileInputTwo.value = "";
   });
 
-  // ======== FORM SUBMIT ========
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     showLoader("Sending...");
 
     const formData = new FormData(form);
 
-    // Add all selected photos
-    allPhotos.forEach((file) => formData.append("photos[]", file));
+    allPhotos.forEach((file) => formData.append("photos", file)); // append files
 
     try {
       const res = await fetch("/api/companies", {
