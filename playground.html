@@ -1,6 +1,737 @@
-<div
-  class="w-full h-full bg-[url('/assets/jakub.jpg')] bg-cover bg-start"
-></div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/output.css" />
+    <title>Landlord</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+    <!-- Apple touch icon for Safari and iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <!-- Flatpickr CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+  </head>
+  <body class="m-0 p-0 overflow-x-hidden">
+    <header class="w-full m-0 p-0">
+      <nav
+        data-name="dekstopNav"
+        class="w-full md:m-0 md:p-0 md:flex md:justify-center md:items-center fixed z-50"
+      >
+        <div
+          data-name="navContainer"
+          class="bg-white/85 w-full backdrop-blur-sm shadow-2xs"
+        >
+          <div class="w-full flex justify-between items-center bg-transparent">
+            <div data-name="logo" class="flex justify-start items-center">
+              <img
+                src="/assets/Bh-logo-header.svg"
+                alt="Better-housing-logo"
+                class="w-[140px] h-[55px] min-w-[140px] min-h-[55px] cursor-pointer relative z-50"
+                id="logoOne"
+              />
+            </div>
+            <div
+              data-name="links"
+              class="hidden w-full md:flex justify-around items-center"
+            >
+              <ul class="w-full flex justify-center items-center">
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/index.html">Home</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/pages/services.html">Services</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/pages/about.html">About</a>
+                </li>
+                <div class="group relative inline-block">
+                  <button class="px-6 font-bold">Apply Now</button>
 
-w-[90%] mb-6 bg-white rounded-xl flex flex-col gap-4 justify-center items-center
-shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl
+                  <div
+                    class="absolute top-full right-0 rounded-lg p-3 mt-1 shadow-md bg-white scale-y-0 group-hover:scale-y-100 group-focus-within:scale-y-100 origin-top duration-100 flex flex-col justify-center items-center w-36"
+                  >
+                    <a
+                      href="/pages/client/landlord.html"
+                      class="block w-full my-2"
+                      >For landlords</a
+                    >
+                    <a
+                      href="/pages/client/company.html"
+                      class="block w-full my-2"
+                      >For companies</a
+                    >
+                  </div>
+                </div>
+              </ul>
+            </div>
+            <div data-name="buttons" class="hidden md:flex pr-6">
+              <a
+                href="/index.html#contact"
+                class="bg-(--color-secondary) w-40 h-10 flex justify-center items-center rounded-md text-white font-bold cursor-pointer transition-all duration-300 hover:brightness-130"
+                >Contact</a
+              >
+            </div>
+            <div
+              data-name="menu"
+              class="pr-4 fixed top-2.5 right-0 z-50 md:hidden"
+            >
+              <img
+                src="/assets/menu.png"
+                alt="menu icon"
+                id="menu"
+                class="w-8"
+              />
+            </div>
+          </div>
+          <div
+            class="w-full flex justify-between items-center bg-transparent md:hidden"
+            id="linksMobileNav"
+          >
+            <!-- expandable nav -->
+            <div
+              data-name="linksMobileNav"
+              class="w-full flex justify-around items-center fixed top-13 bg-white/85 backdrop-blur-sm shadow-2xs"
+            >
+              <ul
+                class="w-full flex flex-col justify-center items-center gap-12 pb-12"
+              >
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/index.html">Home</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/pages/services.html">Services</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/pages/about.html">About</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/pages/client/landlord.html">For Landlords</a>
+                </li>
+                <li
+                  class="px-8 hover:border-b-2 hover:border-(--color-secondary) transition-all duration-100 hover:brightness-130"
+                >
+                  <a href="/pages/client/company.html">For Companies</a>
+                </li>
+              </ul>
+            </div>
+            <!-- end expandable nav -->
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section data-name="hero" id="heroTwo">
+        <div
+          class="w-full h-[50dvh] bg-[url('/assets/joao.jpg')] bg-cover bg-start"
+        >
+          <div class="w-full h-full flex justify-center items-center">
+            <div class="w-full h-full bg-transparent hidden six:block"></div>
+            <div
+              class="w-full h-full bg-(--color-primary)/50 flex flex-col justify-center items-center"
+            >
+              <div class="w-[80%]">
+                <h1 class="text-white text-4xl font-bold pb-8">
+                  Landlord form
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <article data-name="clientInfo">
+        <div
+          data-name="clientInfoContainer"
+          class="w-full flex justify-center items-center py-8"
+        >
+          <div
+            data-name="clientInfo"
+            class="w-[90%] border-b-2 border-b-gray-300 pb-4"
+          >
+            <h2 class="text-2xl pb-4">Landlord request form</h2>
+            <p class="pb-2">
+              Are you a landlord with a property available for rent? Please
+              complete the form below and our team will review the details of
+              your property and contact you to discuss potential tenants and
+              rental opportunities. Our goal is to make the process simple,
+              efficient, and hassle-free — so you can focus on your property
+              while we help connect it with suitable tenants.
+            </p>
+            <p>
+              If you are a Company interested in renting a property with us,
+              please visit our dedicated
+              <a
+                href="/pages/client/company.html"
+                class="font-bold border-b-2 border-(--color-secondary) cursor-pointer"
+                >Company Request Form(click here)</a
+              >
+              instead.
+            </p>
+          </div>
+        </div>
+      </article>
+      <section data-name="companyForm">
+        <p class="ml-18 pb-2">
+          Please note that all fields marked with an asterisk (*) are required.
+        </p>
+        <div
+          data-name="companyFormContainer"
+          class="w-full flex justify-center items-start"
+        >
+          <div
+            data-name="companyFormRequest"
+            class="w-[90%] border-0 sm:border-2 sm:border-gray-300 rounded py-4 px-4"
+          >
+            <form id="companyForm" action="" method="POST">
+              <input
+                type="checkbox"
+                name="botcheck"
+                id=""
+                style="display: none"
+              />
+              <p class="text-xl font-semibold pb-8">Personal information</p>
+              <input type="hidden" name="CompanyInformation" />
+              <div
+                data-name="companyName"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Company name</p>
+                </div>
+                <div class="w-[70%]">
+                  <input
+                    type="text"
+                    name="companyName"
+                    placeholder="Company name"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="kvkNumber"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>KvK number</p>
+                </div>
+                <div class="w-[70%]">
+                  <input
+                    type="text"
+                    name="kvkNumber"
+                    placeholder="Kvk number"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="contactName"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Contact person*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    class="border"
+                  />
+                  <input
+                    type="text"
+                    name="middleName"
+                    placeholder="Middle name"
+                    class="border"
+                  />
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last name"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="emailPhone"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Contact info*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="email"
+                    name="emailAddress"
+                    placeholder="E-mail address"
+                    class="border"
+                  />
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    placeholder="Phone number"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="address"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Address*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap flex-col gap-2">
+                  <input
+                    type="text"
+                    name="streetAddressLineOne"
+                    placeholder="Street addres line 1"
+                    class="border min-w-50 max-w-102"
+                  />
+                  <input
+                    type="text"
+                    name="streetAddressLineTwo"
+                    placeholder="Street address line 2 (optional)"
+                    class="border min-w-50 max-w-102"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="country_city"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Region*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <select
+                    id="country"
+                    name="country"
+                    class="w-50 border rounded"
+                  >
+                    <option value="">Select country</option>
+                  </select>
+                  <select
+                    id="city"
+                    name="city"
+                    class="min-w-50 max-w-50 border rounded"
+                    disabled
+                  >
+                    <option value="">Select city</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                data-name="postCode"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Post code/zip code*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="text"
+                    name="postCode"
+                    placeholder="Post code/zip code"
+                    class="border"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="additionalCompanyInformation"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Additional Company Information</p>
+                </div>
+                <div class="w-[70%]">
+                  <textarea
+                    name="additionalCompanyInformation"
+                    id=""
+                    class="w-full min-w-50 max-w-102 border"
+                    placeholder="Additional company information(optional)..."
+                  ></textarea>
+                </div>
+              </div>
+              <p class="text-xl font-semibold py-8">Property details</p>
+              <input type="hidden" name="HousePreference" />
+              <div data-name="country_city_two" class="pb-4">
+                <div class="flex justify-center items-center">
+                  <div class="w-[30%]">
+                    <p>Region*</p>
+                  </div>
+
+                  <div class="w-[70%] flex flex-col gap-2">
+                    <select
+                      id="countryTwo"
+                      name="preferredCountry"
+                      class="border rounded w-50"
+                    >
+                      <option value="">Select country</option>
+                    </select>
+
+                    <!-- Wrapper for multiple city fields -->
+                    <div id="cityTwoWrapper" class="">
+                      <!-- First city field -->
+                      <div class="city-row flex items-center">
+                        <select
+                          class="cityTwo border rounded min-w-50 max-w-50"
+                          name="preferredCity"
+                          disabled
+                        >
+                          <option value="">Select city</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <button
+                      id="addCityTwo"
+                      type="button"
+                      class="px-3 py-1 bg-blue-500 text-white rounded w-50"
+                    >
+                      Add another city
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                data-name="address"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Address*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap flex-col gap-2">
+                  <input
+                    type="text"
+                    name="streetAddressLineOne"
+                    placeholder="Street addres line 1"
+                    class="border min-w-50 max-w-102"
+                  />
+                  <input
+                    type="text"
+                    name="streetAddressLineTwo"
+                    placeholder="Street address line 2 (optional)"
+                    class="border min-w-50 max-w-102"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="country_city"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Property type*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <select
+                    id="propertyType"
+                    name="PropertyType"
+                    class="w-50 border rounded"
+                  >
+                    <option value="">Select Type</option>
+                    <option value="">House</option>
+                    <option value="">Townhouse</option>
+                    <option value="">Villa</option>
+                    <option value="">Loft</option>
+                    <option value="">Condominium</option>
+                    <option value="">Apartment</option>
+                    <option value="">Studio</option>
+                    <option value="">Duplex</option>
+                    <option value="">Triplex</option>
+                    <option value="">Hotel</option>
+                    <option value="">Motel</option>
+                    <option value="">Hostel</option>
+                    <option value="">Guesthouse</option>
+                    <option value="">Vacation Rental</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                data-name="budget"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Budget per month*</p>
+                  <p class="text-sm text-gray-500">
+                    (How much do you charge per month)
+                  </p>
+                </div>
+                <div class="w-[70%] flex flex-col flex-wrap gap-2">
+                  <input
+                    type="text"
+                    id="budgetPerMonth"
+                    name="budgetPerMonth"
+                    class="border w-50"
+                    placeholder="0 €"
+                  />
+                  <div class="w-[70%] flex flex-col gap-2">
+                    <label class="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        name="IncludingUtilities"
+                        value="true"
+                      />
+                      <span>INCLUDING Utilities</span>
+                    </label>
+
+                    <label class="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        name="NotIncludingUtilities"
+                        value="true"
+                      />
+                      <span>NOT INCLUDING Utilities</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div
+                data-name="deposit"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Deposit*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input
+                    type="text"
+                    id="deposit"
+                    name="deposit"
+                    class="border"
+                    placeholder="0 €"
+                  />
+                </div>
+              </div>
+              <div
+                data-name="tenants_per_bedroom"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Property Furnishing*</p>
+                </div>
+
+                <div class="w-[70%] flex flex-col gap-2">
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" name="Furnished" value="true" />
+                    <span>Furnished</span>
+                  </label>
+
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" name="Unfurnished" value="true" />
+                    <span>Unfurnished</span>
+                  </label>
+
+                  <div class="w-[70%]">
+                    <textarea
+                      name="additionalFurnishingInformation"
+                      id=""
+                      class="w-full min-w-50 max-w-102 border"
+                      placeholder="Additional Furnishing information(optional)..."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div
+                data-name="nr_of_bathrooms"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Nr. of bathrooms*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input type="number" name="nrOfBathrooms" class="border" />
+                </div>
+              </div>
+              <div
+                data-name="nr_of_bedrooms"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Nr. of bedrooms*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input type="number" name="nrOfBedrooms" class="border" />
+                </div>
+              </div>
+              <div
+                data-name="nr_of_tenants"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Nr. of tenants*</p>
+                </div>
+                <div class="w-[70%] flex flex-wrap gap-2">
+                  <input type="number" name="nrOfTenants" class="border" />
+                </div>
+              </div>
+              <div
+                data-name="tenants_per_bedroom"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Tenants per bedroom</p>
+                </div>
+
+                <div class="w-[70%] flex flex-col gap-2">
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="oneTenantPerBedroom"
+                      value="true"
+                    />
+                    <span>1 tenant per bedroom</span>
+                  </label>
+
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" name="sharedBedroom" value="true" />
+                    <span>Shared bedroom (2+)</span>
+                  </label>
+
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="itDoesNotMatter"
+                      value="true"
+                    />
+                    <span>it doesn't matter</span>
+                  </label>
+                </div>
+              </div>
+              <div
+                data-name="tenants_per_bedroom"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Parking spots*</p>
+                </div>
+
+                <div class="w-[70%] flex flex-col gap-2">
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="parkingAvailable"
+                      value="true"
+                    />
+                    <span>Available</span>
+                  </label>
+
+                  <label class="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="parkingNotAvailable"
+                      value="true"
+                    />
+                    <span>NOT Available</span>
+                  </label>
+                </div>
+              </div>
+              <div
+                data-name="additionalCompanyInformation"
+                class="flex justify-center items-center pb-4"
+              >
+                <div class="w-[30%]">
+                  <p>Additional House Information</p>
+                </div>
+                <div class="w-[70%]">
+                  <textarea
+                    name="additionalHouseInformation"
+                    id=""
+                    class="w-full min-w-50 max-w-102 border"
+                    placeholder="Additional house information(optional)..."
+                  ></textarea>
+                </div>
+              </div>
+              <!--  photos-->
+
+              <!--  !photos-->
+
+              <label class="flex items-center gap-2 pt-8">
+                <input type="checkbox" name="informationChecked" value="true" />
+                <span>I checked and verified the information above.*</span>
+              </label>
+              <label class="flex items-center gap-2 pb-2">
+                <input type="checkbox" name="termsAndConditions" value="true" />
+                <span
+                  >I Understand and Agree with the Terms And Conditions.*</span
+                >
+              </label>
+              <button
+                type="submit"
+                class="border py-1 px-8 rounded bg-(--color-primary) text-white cursor-pointer"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div data-name="footerContainer">
+        <div
+          data-name="footerContainer"
+          class="w-full grid grid-rows-4 six:grid-rows-2 lg:grid-rows-1 justify-center py-12 six:grid-cols-2 lg:grid-cols-4 lg:items-start"
+        >
+          <div class="w-full">
+            <img
+              src="/assets/Bh-logo-header.svg"
+              alt="better housing logo"
+              class="w-45"
+            />
+            <p class="w-60 text-slate-500 six:pl-4">
+              Housing opportunity for companies and tenants.
+            </p>
+            <p class="w-60 text-slate-500 six:pl-4">
+              ⓒ 2025 Better-housing. All rights reserved.
+            </p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start">
+            <p class="font-bold lg:pt-18">Contact information</p>
+            <p class="">+31 628 839 811</p>
+            <p class="">info@better-housing.nl</p>
+            <p class="">KvK: 98346423</p>
+          </div>
+          <div class="w-full pb-4 flex flex-col justify-center items-start">
+            <p class="font-bold six:pl-4 lg:pt-18">Terms and Conditions</p>
+            <a href="/pages/privacy.html" class="six:pl-4 cursor-pointer"
+              >Privacy policy</a
+            >
+            <a href="/pages/cookies.html" class="six:pl-4 cursor-pointer"
+              >Cookie policy</a
+            >
+          </div>
+          <div class="w-full flex flex-col justify-center items-start">
+            <p class="font-bold lg:pt-18">Office hours</p>
+            <p class="">Mon – Fri 08:30 – 17:00</p>
+            <p class="">sat – Sun 08:30 – 12:00</p>
+            <p class="w-54">National days and Holidays may interfere.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/src/index.js"></script>
+    <script type="module" src="/src/region.js"></script>
+    <script type="module" src="/src/playground.js"></script>
+    <script type="module" src="/src/playgroundadmin.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  </body>
+</html>
